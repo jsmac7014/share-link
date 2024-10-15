@@ -1,6 +1,6 @@
 import React from "react";
 import { createBrowserRouter, Navigate } from "react-router-dom";
-import { useUser } from "meteor/react-meteor-accounts";
+import { useUser, useUserId } from "meteor/react-meteor-accounts";
 
 import MainPage from "./pages/MainPage";
 import SignUpPage from "./pages/SignUpPage";
@@ -39,7 +39,7 @@ const router = createBrowserRouter([
 ]);
 
 function AuthenticatedRoute({ children }) {
-  const user = useUser();
+  const user = useUserId();
 
   return user ? children : <Navigate to="/sign-in" />;
 }
