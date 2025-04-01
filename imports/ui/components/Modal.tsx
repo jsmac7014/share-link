@@ -13,6 +13,7 @@ const Modal: React.FC<ModalProps> = ({children, onClose}) => {
             </button>
             <div className="modal-content">
                 {children}
+
             </div>
         </div>
     );
