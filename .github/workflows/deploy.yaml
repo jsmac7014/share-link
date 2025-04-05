@@ -15,8 +15,7 @@ jobs:
           node-version: '22'
       - name: install meteor
         run: curl https://install.meteor.com/ | sh
-      - name: build app
-        run: meteor build ../build --server-only
+
       - name: setup ssh
         run : |
           mkdir -p ~/.ssh
