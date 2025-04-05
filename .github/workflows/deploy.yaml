@@ -24,10 +24,13 @@ jobs:
           chmod 600 ~/.ssh/id_rsa
           eval $(ssh-agent -s)
           ssh-add ~/.ssh/id_rsa <<< ${{ secrets.SSH_PASSPHRASE }}
-          ssh-keyscan -H ${{ secrets.SERVER_IP }} >> ~/.ssh/known_hosts
+          ssh-keyscan -H ${{ secrets.SERVER_HOST }} >> ~/.ssh/known_hosts
 
       - name: install mup globally
         run: npm install -g mup
+
+      - name: install dependencies
+        run: meteor npm install
 
       - name: deploy app
         run: mup deploy
