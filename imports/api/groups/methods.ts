@@ -46,4 +46,25 @@ Meteor.methods({
         // Insert the new group into the database
         return Groups.insertAsync(group);
     },
+    "groups.update": async function (groupId: string, group: Partial<Group>) {
+        check(groupId, String);
+        check(group, {
+            name: String,
+            description: String,
+        });
+
+        // Check if the user is logged in
+        if (!this.userId) {
+            throw new Meteor.Error("not-authorized", "You must be logged in to update group details.");
+        }
+
+        // check if the user is the owner of the group
+        const currentGroup = await Groups.findOneAsync(groupId);
+        if(currentGroup?.owner !== this.userId) {
+            throw new Meteor.Error("not-authorized", "You are not authorized to update this group.");
+        }
+
+        // Update the group in the database
+        return Groups.updateAsync(groupId, {$set: group});
+    }
 })
