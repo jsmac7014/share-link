@@ -13,9 +13,12 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: '22'
+
+#      INSTALL METEOR
       - name: install meteor
         run: curl https://install.meteor.com/ | sh
-
+        
+#     SETUP SSH
       - name: setup ssh
         run : |
           mkdir -p ~/.ssh
@@ -25,12 +28,19 @@ jobs:
           ssh-add ~/.ssh/id_rsa <<< ${{ secrets.SSH_PASSPHRASE }}
           ssh-keyscan -H ${{ secrets.SERVER_HOST }} >> ~/.ssh/known_hosts
 
+#     SETUP METEOR UP
       - name: install mup globally
         run: npm install -g mup
 
+#     INSTALL DEPENDENCIES
       - name: install dependencies
         run: meteor npm install
 
+#      BUILD
+      - name: build app
+        run: meteor build ../build --server-only
+
+#       DEPLOY
       - name: deploy app
         run: mup deploy
         env:
