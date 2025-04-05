@@ -1,14 +1,15 @@
 import React from 'react'
 import { Outlet } from "react-router-dom"
 import Navbar from "../components/Navbar"
+import NewNavbar from "/imports/ui/components/NewNavbar";
 
 export default function MainLayout() {
   return (
-    <div className="min-h-screen">
-      <div className="mb-2">
-        <Navbar />
+    <div className="min-h-dvh p-3 sm:p-0">
+      <div className="md:p-4 py-2">
+        <NewNavbar />
       </div>
-      <div className="p-2">
+      <div className="max-w-5xl mx-auto">
         <Outlet />
       </div>
     </div>
