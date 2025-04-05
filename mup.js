@@ -9,7 +9,7 @@ module.exports = {
     app: {
         // TODO: change app name and path
         name: 'linkly',
-        path: '../build',
+        path: '.',
 
         servers: {
             one: {},
