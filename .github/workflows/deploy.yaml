@@ -39,7 +39,7 @@ jobs:
 #     CREATE settings.json
       - name: create settings.json for mup
         run: |
-          echo echo '' > settings.json
+          echo '{}' > settings.json
 #       DEPLOY
       - name: deploy app
         run: mup deploy
