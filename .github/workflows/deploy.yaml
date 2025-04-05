@@ -1,0 +1,38 @@
+name: "Deploy Meteor Using Meteor Up"
+on:
+  push:
+    branches:
+      - main
+jobs:
+  deploy:
+    runs-on: ubuntu-22.04
+    steps:
+      - name: checkout repo
+        uses: actions/checkout@v3
+      - name: setup node
+        uses: actions/setup-node@v3
+        with:
+          node-version: '22'
+      - name: install meteor
+        run: curl https://install.meteor.com/ | sh
+      - name: build app
+        run: meteor build ../build --server-only
+      - name: setup ssh
+        run : |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+          eval $(ssh-agent -s)
+          ssh-add ~/.ssh/id_rsa <<< ${{ secrets.SSH_PASSPHRASE }}
+          ssh-keyscan -H ${{ secrets.SERVER_IP }} >> ~/.ssh/known_hosts
+
+      - name: install mup globally
+        run: npm install -g mup
+
+      - name: deploy app
+        run: mup deploy
+        env:
+          SERVER_HOST: ${{ secrets.SERVER_HOST }}
+          SERVER_USERNAME: ${{ secrets.SERVER_USER }}
+
+
