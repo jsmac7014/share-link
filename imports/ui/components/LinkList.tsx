@@ -4,7 +4,9 @@ import {useFind, useSubscribe} from "meteor/react-meteor-data";
 import {Links} from "/imports/api/links/links";
 
 export default function LinkList({groupId, date}: { groupId: string, date: string }) {
-    useSubscribe("links", groupId, date);
+    // Get Timezone of the user
+    const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+    useSubscribe("links", groupId, date, timezone);
     const links = useFind(() => Links.find({groupId: groupId}, {sort: {createdAt: -1}}));
 
     async function deleteLink(linkId: string | undefined) {
