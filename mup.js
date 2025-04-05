@@ -3,7 +3,7 @@ module.exports = {
         one: {
             host: process.env.SERVER_HOST,
             username: 'ubuntu',
-            pem: '/home/runner/.ssh/id_rsa',
+            pem: './.ssh/deploy_key',
         }
     },
 
