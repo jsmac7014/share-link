@@ -3,11 +3,11 @@ module.exports = {
         one: {
             host: process.env.SERVER_HOST,
             username: 'ubuntu',
+            pem: '/home/runner/.ssh/id_rsa',
         }
     },
 
     app: {
-        // TODO: change app name and path
         name: 'linkly',
         path: '.',
 
@@ -20,8 +20,6 @@ module.exports = {
         },
 
         env: {
-            // TODO: Change to your app's url
-            // If you are using ssl, it needs to start with https://
             ROOT_URL: 'https://linkly.jungwoo.ovh',
             MONGO_URL: 'mongodb://mongodb/meteor',
             MONGO_OPLOG_URL: 'mongodb://mongodb/local',
