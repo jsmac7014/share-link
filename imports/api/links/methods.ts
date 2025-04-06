@@ -2,8 +2,9 @@ import {Meteor} from "meteor/meteor";
 import {Links} from "/imports/api/links/links";
 import {check} from "meteor/check";
 import cheerio from 'cheerio';
-import { fetch } from 'meteor/fetch';
 import type { Link } from "/imports/types/types";
+import puppeteer from 'puppeteer';
+
 
 Meteor.methods({
     "insert.link": async function (link: Object) {
@@ -19,12 +20,19 @@ Meteor.methods({
 
         // fetch meta data from the link
         try {
-            const response = await fetch(link.link);
-            if (!response.ok) {
-                throw new Meteor.Error("link-not-found", "Link not found.");
-            }
-            const html = await response.text();
+            const browser = await puppeteer.launch({
+                headless: true,
+                args: ['--no-sandbox', '--disable-setuid-sandbox']
+            });
+            const page = await browser.newPage();
+            await page.setUserAgent(
+                'Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)'
+            );
+            await page.goto(link.link, { waitUntil: 'domcontentloaded', timeout: 30000 });
+            const html = await page.content();
+            await browser.close();
             const $ = cheerio.load(html);
+
             const obj: Link = {
                 url: link.link,
                 title: $("title").text(),
