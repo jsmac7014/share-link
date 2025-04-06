@@ -16,3 +16,10 @@ export type Link = {
     owner: string;
     createdAt: Date;
 }
+export type Invite = {
+    _id?: string;
+    groupId: string;
+    user: string;
+    createdAt: Date;
+    expiresAt: Date;
+}
