@@ -6,7 +6,7 @@ export default function ProfilePage() {
 
     return (
         <div>
-            <div className="bg-white p-3 rounded border ">
+            <div className="bg-white p-8 rounded border ">
                 <h1 className="text-3xl font-bold">Profile</h1>
                 <form className="flex flex-col space-y-2">
                     <label htmlFor="username" className="text-gray-500">Username</label>
@@ -20,7 +20,6 @@ export default function ProfilePage() {
                     <button type="submit" className="w-fit bg-blue-500 text-white p-2 rounded self-end">Update</button>
                 </form>
             </div>
-
             <div className="bg-white p-3 rounded border mt-4">
                 <h1 className="text-3xl font-bold"></h1>
                 <div className="flex flex-col space-y-2">
