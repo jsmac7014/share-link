@@ -3,12 +3,24 @@ import {Links} from "/imports/api/links/links";
 import dayjs from 'dayjs';
 import utc from 'dayjs/plugin/utc';
 import timezone from 'dayjs/plugin/timezone';
+import {Groups} from "/imports/api/groups/groups";
+
 dayjs.extend(utc);
 dayjs.extend(timezone);
 
-Meteor.publish("links", function (groupId, date, timezone) {
+Meteor.publish("links", async function (groupId, date, timezone) {
     if (!this.userId) {
-        // return error
+        throw new Meteor.Error("not-authorized");
+    }
+    if (!groupId || !date || !timezone) {
+        throw new Meteor.Error("Missing arguments");
+    }
+
+    // check if the user is a member of the group or the owner
+    const group = await Groups.findOneAsync({ _id: groupId });
+    if (!group) {
+        throw new Meteor.Error("Group not found");
+    } else if (group.owner !== this.userId && !group.members?.includes(this.userId)) {
         throw new Meteor.Error("not-authorized");
     }
 
@@ -18,7 +30,6 @@ Meteor.publish("links", function (groupId, date, timezone) {
     return Links.find({
             $and: [
                 {groupId: groupId},
-                // {$or: [{owner: this.userId}, {members: {$in: [this.userId]}}]},
                 {createdAt: {$gte: start, $lt: end}} // 날짜 필터 추가
             ]
         }
