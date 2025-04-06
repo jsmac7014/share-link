@@ -12,20 +12,14 @@ export default function InviteRedirect() {
     useEffect(() => {
         async function acceptInvite() {
             // get invite data
-            const data = await Meteor.callAsync("invites.get", inviteId);
-            // invalid invite
-            if (!data) {
-                console.error("No data received");
-                return;
-            }
-            // insert current user to group members
             try {
+                const data = await Meteor.callAsync("get.invite", inviteId);
                 await Meteor.callAsync("groups.addMember", data.groupId)
-                // then navigate to group page
                 navigate(`/group/${data.groupId}?date=${date}`, {replace: true});
+
             } catch (error) {
+                console.error(error);
                 alert(error);
-                // navigate to home if user is not authorized
                 navigate("/");
             }
         }
