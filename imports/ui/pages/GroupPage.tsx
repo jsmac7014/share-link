@@ -7,6 +7,7 @@ import customParseFormat from 'dayjs/plugin/customParseFormat';
 import Calendar from 'react-calendar';
 import '../styles/calendar.css';
 import GroupEditModal from "/imports/ui/components/GroupEditModal";
+import { ToastContainer, toast } from 'react-toastify';
 
 const LinkList = lazy(() => import("/imports/ui/components/LinkList"));
 
@@ -39,12 +40,13 @@ export default function GroupPage() {
     }
 
     async function createInvite() {
-        const inviteId = await Meteor.callAsync("invites.insert", groupId);
-        if (inviteId) {
-            console.log(inviteId);
-            // alert(`Invite link created: ${window.location.origin}/invite/${inviteId}`);
-        } else {
-            alert("Failed to create invite link");
+        try {
+            const inviteURL = await Meteor.callAsync("insert.invite", groupId);
+            await navigator.clipboard.writeText(inviteURL);
+            toast("Invite link created successfully", {type: "success"});
+        } catch (error) {
+            console.error("Error creating invite:", error);
+            toast.error("Failed to create invite link");
         }
     }
 
@@ -143,6 +145,7 @@ export default function GroupPage() {
             {isEditModalOpen && (
                 <GroupEditModal group={group!} onClose={() => setIsEditModalOpen(false)}/>
             )}
+            <ToastContainer />
         </div>
     );
 }
