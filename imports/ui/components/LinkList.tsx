@@ -6,11 +6,15 @@ import {Links} from "/imports/api/links/links";
 export default function LinkList({groupId, date}: { groupId: string, date: string }) {
     // Get Timezone of the user
     const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
-    useSubscribe("links", groupId, date, timezone);
+    try {
+        useSubscribe("links", groupId, date, timezone);
+    } catch (error) {
+        console.error("Error subscribing to links:", error);
+    }
+
     const links = useFind(() => Links.find({groupId: groupId}, {sort: {createdAt: -1}}));
 
     async function deleteLink(linkId: string | undefined) {
-        console.log("Deleting link with ID:", linkId);
         await Meteor.callAsync("delete.link", linkId);
     }
 

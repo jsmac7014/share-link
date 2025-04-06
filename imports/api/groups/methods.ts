@@ -66,5 +66,29 @@ Meteor.methods({
 
         // Update the group in the database
         return Groups.updateAsync(groupId, {$set: group});
+    },
+    "groups.addMember": async function (groupId: string) {
+        check(groupId, String);
+
+        // Check if the user is logged in
+        if (!this.userId) {
+            throw new Meteor.Error("not-authorized", "You must be logged in to add members to a group.");
+        }
+
+        const currentGroup = await Groups.findOneAsync(groupId);
+
+        // check if the user is the owner of the group
+        // you cannot add owner as member
+        console.log(currentGroup?.owner == this.userId);
+        if(currentGroup?.owner == this.userId) {
+            throw new Meteor.Error("not-authorized", "You cannot add owner as member.");
+        }
+        // check if the user is already a member
+        if (currentGroup?.members?.includes(this.userId)) {
+            throw new Meteor.Error("user-already-member", "User is already a member of this group.");
+        }
+
+        // Add the member to the group
+        Groups.updateAsync(groupId, {$addToSet: {members: this.userId}});
     }
 })

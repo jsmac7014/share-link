@@ -18,7 +18,7 @@ Meteor.publish("links", function (groupId, date, timezone) {
     return Links.find({
             $and: [
                 {groupId: groupId},
-                {$or: [{owner: this.userId}, {members: {$in: [this.userId]}}]},
+                // {$or: [{owner: this.userId}, {members: {$in: [this.userId]}}]},
                 {createdAt: {$gte: start, $lt: end}} // 날짜 필터 추가
             ]
         }
