@@ -1,7 +1,7 @@
 {
   "name": "Linkly",
   "short_name": "Linkly",
-  "start_url": "/",
+  "start_url": "/dashboard",
   "display": "standalone",
   "background_color": "#ffffff",
   "theme_color": "#ffffff",

@@ -90,5 +90,30 @@ Meteor.methods({
 
         // Add the member to the group
         Groups.updateAsync(groupId, {$addToSet: {members: this.userId}});
+    },
+    "groups.leave": async function (groupId: string, userId: string) {
+        check(groupId, String);
+        check(userId, String);
+
+        // Check if the user is logged in
+        if (!this.userId) {
+            throw new Meteor.Error("not-authorized", "You must be logged in to remove members from a group.");
+        }
+
+        // check if the user is the owner of the group or the member who is leaving
+        const currentGroup = await Groups.findOneAsync(groupId);
+        if(currentGroup?.owner == this.userId) {
+            throw new Meteor.Error("not-authorized", "You cannot leave the group as owner.");
+        } else if(this.userId !== userId) {
+            throw new Meteor.Error("not-authorized", "You are not authorized to remove this member.");
+        }
+
+        // check if the user is already a member
+        if (!currentGroup?.members?.includes(userId)) {
+            throw new Meteor.Error("user-not-member", "User is not a member of this group.");
+        }
+
+        // Remove the member from the group
+        Groups.updateAsync(groupId, {$pull: {members: userId}});
     }
 })

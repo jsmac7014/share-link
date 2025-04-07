@@ -61,6 +61,16 @@ export default function GroupPage() {
         }
     };
 
+    async function handleLeaveGroup() {
+        try {
+            await Meteor.callAsync("groups.leave", groupId, Meteor.userId());
+            navigate("/dashboard");
+        } catch (error) {
+            console.error("Error leaving group:", error);
+            toast.error("Failed to leave group");
+        }
+    }
+
     function changeDate(date: Date) {
         date.setDate(date.getDate() + 1);
         setSearchParams({date: date.toISOString().split("T")[0]});
@@ -119,7 +129,7 @@ export default function GroupPage() {
                         {group?.name}
                     </h1>
                     <p className="text-gray-500">{group?.description}</p>
-                    {isOwner && (
+                    {isOwner ? (
                         <div className="inline-flex gap-2">
                             <button
                                 title="Edit group"
@@ -140,6 +150,17 @@ export default function GroupPage() {
                                      stroke="currentColor" className="size-5">
                                     <path strokeLinecap="round" strokeLinejoin="round"
                                           d="M13.19 8.688a4.5 4.5 0 0 1 1.242 7.244l-4.5 4.5a4.5 4.5 0 0 1-6.364-6.364l1.757-1.757m13.35-.622 1.757-1.757a4.5 4.5 0 0 0-6.364-6.364l-4.5 4.5a4.5 4.5 0 0 0 1.242 7.244"/>
+                                </svg>
+                            </button>
+                        </div>
+                    ) : (
+                        <div className="inline-flex">
+                            <button className="p-2 border rounded text-zinc-500 hover:bg-gray-100 bg-white inline-flex gap-1 items-center" onClick={handleLeaveGroup}>
+                                <span className="text-sm">
+                                    Leave group
+                                </span>
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-5">
+                                    <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 9V5.25A2.25 2.25 0 0 1 10.5 3h6a2.25 2.25 0 0 1 2.25 2.25v13.5A2.25 2.25 0 0 1 16.5 21h-6a2.25 2.25 0 0 1-2.25-2.25V15m-3 0-3-3m0 0 3-3m-3 3H15" />
                                 </svg>
                             </button>
                         </div>
