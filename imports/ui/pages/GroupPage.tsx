@@ -35,7 +35,12 @@ export default function GroupPage() {
     }
 
     async function addLink() {
-        await Meteor.callAsync("insert.link", {link, groupId});
+        try {
+            await Meteor.callAsync("insert.link", {link, groupId});
+        } catch (error) {
+            console.error("Error adding link:", error);
+            toast.error("Failed to add link");
+        }
         setLink("");
     }
 

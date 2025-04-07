@@ -3,6 +3,7 @@ import {Meteor} from "meteor/meteor";
 import {useFind, useSubscribe} from "meteor/react-meteor-data";
 import {Links} from "/imports/api/links/links";
 
+
 export default function LinkList({groupId, date}: { groupId: string, date: string }) {
     // Get Timezone of the user
     const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
@@ -49,8 +50,10 @@ export default function LinkList({groupId, date}: { groupId: string, date: strin
                             <a href={link.url} target="_blank" rel="noopener noreferrer" className="block">
                                 <div
                                     className="flex bg-white w-full h-full p-2 gap-2 border border-gray-300 rounded min-h-32">
-                                    <img src={link.imageLink} className="w-32 object-cover rounded"
-                                         alt={link.title}/>
+                                    {link.imageLink && (
+                                        <img src={link.imageLink} className="w-32 object-cover rounded"
+                                             alt={link.title}/>
+                                    )}
                                     <div className="w-full flex flex-col min-h-full justify-between">
                                         <div className="w-11/12">
                                             <h3 className="text-lg font-bold line-clamp-2">{link.title}</h3>

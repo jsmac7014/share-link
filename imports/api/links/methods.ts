@@ -3,7 +3,6 @@ import {Links} from "/imports/api/links/links";
 import {check} from "meteor/check";
 import cheerio from 'cheerio';
 import type { Link } from "/imports/types/types";
-import puppeteer from 'puppeteer';
 
 Meteor.methods({
     "insert.link": async function (link: Object) {
@@ -19,23 +18,25 @@ Meteor.methods({
 
         // fetch meta data from the link
         try {
-            const browser = await puppeteer.launch({
-                headless: true,
-                args: ['--no-sandbox', '--disable-setuid-sandbox'],
-                executablePath: puppeteer.executablePath()
-                // executablePath: '/usr/bin/chromium-browser'
-            });
+            const response = await fetch(link.link, {
+                method: 'GET',
+                headers: {
+                    // 'Cache-Control': 'max-age=0',
+                //     user agent as bot
+                    'User-Agent': 'Mozilla/5.0 AppleWebKit/537.36 (KHTML, like Gecko; compatible; Googlebot/2.1; +http://www.google.com/bot.html) Chrome/58.0.3029.110 Safari/537.3',
+                }
+            })
+            const statusCode = response.status;
+            const html = await response.text();
 
-            const page = await browser.newPage();
-            await page.setUserAgent(
-                'Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)'
-            );
-            await page.goto(link.link, { waitUntil: 'domcontentloaded', timeout: 30000 });
-            const html = await page.content();
-            await browser.close();
+            if(statusCode !== 200) {
+                throw new Meteor.Error("link-fetch-error", "This link cannot be fetched.");
+            }
 
             const $ = cheerio.load(html);
-            console.log(html)
+            console.log($("title").text());
+            console.log($('meta[name="description"]').attr('content'));
+            console.log($('meta[property="og:image"]').attr('content'));
 
             const obj: Link = {
                 url: link.link,
