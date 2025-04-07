@@ -4,6 +4,8 @@ import {check} from "meteor/check";
 import cheerio from 'cheerio';
 import type { Link } from "/imports/types/types";
 import puppeteer from 'puppeteer';
+import ogs from 'open-graph-scraper';
+
 
 
 Meteor.methods({
@@ -22,8 +24,10 @@ Meteor.methods({
         try {
             const browser = await puppeteer.launch({
                 headless: true,
-                args: ['--no-sandbox', '--disable-setuid-sandbox']
+                args: ['--no-sandbox', '--disable-setuid-sandbox'],
+                executablePath: '/usr/bin/chromium-browser' // 경로는 실제 Docker 이미지에 따라 다름
             });
+
             const page = await browser.newPage();
             await page.setUserAgent(
                 'Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)'
@@ -31,6 +35,9 @@ Meteor.methods({
             await page.goto(link.link, { waitUntil: 'domcontentloaded', timeout: 30000 });
             const html = await page.content();
             await browser.close();
+
+
+
             const $ = cheerio.load(html);
 
             const obj: Link = {
@@ -42,7 +49,6 @@ Meteor.methods({
                 owner: this.userId,
                 createdAt: new Date(),
             }
-
             return Links.insertAsync(obj);
         } catch (error) {
             throw new Meteor.Error("link-fetch-error", "Error fetching link data.");
