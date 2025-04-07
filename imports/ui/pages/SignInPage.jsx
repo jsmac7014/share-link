@@ -15,7 +15,7 @@ export default function SignInPage() {
         setError(error.reason);
       } else {
         setError("");
-        navigate("/");
+        navigate("/dashboard");
       }
     });
   }

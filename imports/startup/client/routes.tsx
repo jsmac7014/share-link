@@ -9,6 +9,7 @@ import GroupPage from "/imports/ui/pages/GroupPage";
 import {useTracker} from "meteor/react-meteor-data";
 import ProfilePage from "/imports/ui/pages/ProfilePage";
 import InviteRedirect from "/imports/ui/pages/InviteRedirect";
+import HomePage from "/imports/ui/pages/HomePage";
 
 const router = createBrowserRouter([
     {
@@ -16,7 +17,7 @@ const router = createBrowserRouter([
         element: <MainLayout/>,
         children: [
             {
-                index: true,
+                path: "/dashboard",
                 element: (
                     <AuthenticatedRoute>
                         <Dashboard/>
@@ -50,6 +51,11 @@ const router = createBrowserRouter([
         ],
     },
 
+    {
+        index: true,
+        path: "/",
+        element: <HomePage />,
+    },
     {
         path: "sign-up",
         element: <SignUpPage/>,

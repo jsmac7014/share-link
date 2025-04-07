@@ -13,7 +13,7 @@ export default function NewNavbar() {
     return (
         <div className="flex justify-between items-center w-full max-w-5xl mx-auto ">
             <div className="flex items-center">
-                <Link to="/" className="text-2xl font-bold text-blue-500">
+                <Link to="/dashboard" className="text-2xl font-bold text-blue-500">
                     Linkly
                 </Link>
             </div>
