@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, {useEffect, useState} from "react";
 import { Accounts } from "meteor/accounts-base";
 import { useNavigate } from "react-router-dom";
 
@@ -43,8 +43,14 @@ export default function SignUpPage() {
         console.log(error);
         setError(error.reason);
       });
-  
   };
+
+  useEffect(() => {
+    // if user is already logged in, redirect to dashboard
+    if (Meteor.userId()) {
+      navigate("/dashboard");
+    }
+  })
 
   return (
     <div className="flex flex-col items-center justify-center max-w-md min-h-dvh gap-5 mx-auto p-4">
