@@ -4,9 +4,6 @@ import {check} from "meteor/check";
 import cheerio from 'cheerio';
 import type { Link } from "/imports/types/types";
 import puppeteer from 'puppeteer';
-import ogs from 'open-graph-scraper';
-
-
 
 Meteor.methods({
     "insert.link": async function (link: Object) {
