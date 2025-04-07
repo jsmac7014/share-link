@@ -20,6 +20,7 @@ export default function GroupPage() {
     const [link, setLink] = useState("");
     const [isCalendarOpen,] = useState(false);
     const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+    const [inviteURL, setInviteURL] = useState("");
 
     const {groupId} = useParams();
     const [searchParams, setSearchParams] = useSearchParams();
@@ -45,16 +46,20 @@ export default function GroupPage() {
         setLink("");
     }
 
-    async function createInvite() {
-        try {
-            const inviteURL = await Meteor.callAsync("insert.invite", groupId);
-            await navigator.clipboard.writeText(inviteURL);
-            toast("Invite link created successfully", {type: "success"});
-        } catch (error) {
-            console.error("Error creating invite:", error);
-            toast.error("Failed to create invite link");
+    const handleInviteBtnClick = async () => {
+        if (!inviteURL) {
+            const url = await Meteor.callAsync("insert.invite", groupId);
+            setInviteURL(url);
+            toast("Invite link create!\n Tap again to copy to clipboard ", { type: "info" });
+        } else {
+            try {
+                await navigator.clipboard.writeText(inviteURL);
+                toast("Invite link copied!", { type: "success" });
+            } catch (err) {
+                toast.error("Copy failed", { type: "error" });
+            }
         }
-    }
+    };
 
     function changeDate(date: Date) {
         date.setDate(date.getDate() + 1);
@@ -129,7 +134,7 @@ export default function GroupPage() {
                             </button>
                             {/* Create invitation link */}
                             <button className="p-2 border rounded text-zinc-500 hover:bg-gray-100 bg-white"
-                                    title="Create invitation link" onClick={createInvite}>
+                                    title="Create invitation link" onClick={handleInviteBtnClick}>
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                                      strokeWidth={1.5}
                                      stroke="currentColor" className="size-5">
