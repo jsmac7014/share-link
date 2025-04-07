@@ -22,7 +22,8 @@ Meteor.methods({
             const browser = await puppeteer.launch({
                 headless: true,
                 args: ['--no-sandbox', '--disable-setuid-sandbox'],
-                executablePath: '/usr/bin/chromium-browser' // 경로는 실제 Docker 이미지에 따라 다름
+                executablePath: puppeteer.executablePath()
+                // executablePath: '/usr/bin/chromium-browser'
             });
 
             const page = await browser.newPage();
@@ -33,9 +34,8 @@ Meteor.methods({
             const html = await page.content();
             await browser.close();
 
-
-
             const $ = cheerio.load(html);
+            console.log(html)
 
             const obj: Link = {
                 url: link.link,
