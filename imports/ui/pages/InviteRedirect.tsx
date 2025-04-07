@@ -3,6 +3,7 @@ import {Meteor} from "meteor/meteor";
 
 import {useParams,useNavigate} from "react-router-dom";
 import dayjs from "dayjs";
+import {Helmet} from "react-helmet-async";
 
 export default function InviteRedirect() {
     const {inviteId} = useParams();
@@ -29,6 +30,9 @@ export default function InviteRedirect() {
 
     return (
         <div>
+            <Helmet>
+                <title>You have been invited</title>
+            </Helmet>
             <h1>Redirecting...</h1>
         </div>
     );

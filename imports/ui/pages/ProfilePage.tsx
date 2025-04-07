@@ -1,11 +1,15 @@
 import React from "react";
 import {useUser} from "meteor/react-meteor-accounts";
+import {Helmet} from "react-helmet-async";
 
 export default function ProfilePage() {
     const user = useUser();
 
     return (
         <div>
+            <Helmet>
+                <title>Profile</title>
+            </Helmet>
             <div className="bg-white p-8 rounded border ">
                 <h1 className="text-3xl font-bold">Profile</h1>
                 <form className="flex flex-col space-y-2">

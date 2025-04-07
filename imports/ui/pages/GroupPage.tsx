@@ -7,7 +7,8 @@ import customParseFormat from 'dayjs/plugin/customParseFormat';
 import Calendar from 'react-calendar';
 import '../styles/calendar.css';
 import GroupEditModal from "/imports/ui/components/GroupEditModal";
-import { ToastContainer, toast } from 'react-toastify';
+import {ToastContainer, toast} from 'react-toastify';
+import {Helmet} from "react-helmet-async";
 
 const LinkList = lazy(() => import("/imports/ui/components/LinkList"));
 
@@ -89,6 +90,10 @@ export default function GroupPage() {
 
     return (
         <div className="grid md:grid-cols-12 gap-2 grid-cols-1">
+            <Helmet>
+                <title>{group?.name}</title>
+                <meta name="description" content={group?.description}/>
+            </Helmet>
             <div className={`md:block md:col-span-4 ${isCalendarOpen ? "block" : "hidden"}`}>
                 <Calendar
                     onClickDay={(date) => changeDate(date)}
@@ -109,26 +114,31 @@ export default function GroupPage() {
                         {group?.name}
                     </h1>
                     <p className="text-gray-500">{group?.description}</p>
-                    <div className="inline-flex gap-2">
-                        <button
-                            title="Edit group"
-                            className="inline-flex items-center p-2 border rounded text-zinc-500 hover:bg-gray-100 bg-white"
-                            onClick={() => setIsEditModalOpen(!isEditModalOpen)}>
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5}
-                                 stroke="currentColor" className="size-5">
-                                <path strokeLinecap="round" strokeLinejoin="round"
-                                      d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0 1 15.75 21H5.25A2.25 2.25 0 0 1 3 18.75V8.25A2.25 2.25 0 0 1 5.25 6H10"/>
-                            </svg>
-                        </button>
-                        {/* Create invitation link */}
-                        <button className="p-2 border rounded text-zinc-500 hover:bg-gray-100 bg-white" title="Create invitation link" onClick={createInvite}>
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5}
-                                 stroke="currentColor" className="size-5">
-                                <path strokeLinecap="round" strokeLinejoin="round"
-                                      d="M13.19 8.688a4.5 4.5 0 0 1 1.242 7.244l-4.5 4.5a4.5 4.5 0 0 1-6.364-6.364l1.757-1.757m13.35-.622 1.757-1.757a4.5 4.5 0 0 0-6.364-6.364l-4.5 4.5a4.5 4.5 0 0 0 1.242 7.244"/>
-                            </svg>
-                        </button>
-                    </div>
+                    {isOwner && (
+                        <div className="inline-flex gap-2">
+                            <button
+                                title="Edit group"
+                                className="inline-flex items-center p-2 border rounded text-zinc-500 hover:bg-gray-100 bg-white"
+                                onClick={() => setIsEditModalOpen(!isEditModalOpen)}>
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                     strokeWidth={1.5}
+                                     stroke="currentColor" className="size-5">
+                                    <path strokeLinecap="round" strokeLinejoin="round"
+                                          d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0 1 15.75 21H5.25A2.25 2.25 0 0 1 3 18.75V8.25A2.25 2.25 0 0 1 5.25 6H10"/>
+                                </svg>
+                            </button>
+                            {/* Create invitation link */}
+                            <button className="p-2 border rounded text-zinc-500 hover:bg-gray-100 bg-white"
+                                    title="Create invitation link" onClick={createInvite}>
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                     strokeWidth={1.5}
+                                     stroke="currentColor" className="size-5">
+                                    <path strokeLinecap="round" strokeLinejoin="round"
+                                          d="M13.19 8.688a4.5 4.5 0 0 1 1.242 7.244l-4.5 4.5a4.5 4.5 0 0 1-6.364-6.364l1.757-1.757m13.35-.622 1.757-1.757a4.5 4.5 0 0 0-6.364-6.364l-4.5 4.5a4.5 4.5 0 0 0 1.242 7.244"/>
+                                </svg>
+                            </button>
+                        </div>
+                    )}
                 </div>
                 {(isOwner && searchParams.get("date") === dayjs().format("YYYY-MM-DD") &&
                     <div className="w-full flex flex-row gap-1 flex-wrap">
@@ -138,7 +148,7 @@ export default function GroupPage() {
                             type="text"
                             placeholder="Enter link"
                             className="flex-1 p-2 border border-gray-300 rounded"/>
-                        <button className="min-w-32 p-2 bg-blue-500 rounded text-white" onClick={addLink}>Add</button>
+                        <button className="p-2 bg-blue-500 rounded text-white w-full" onClick={addLink}>Add</button>
                     </div>)}
                 <Suspense
                     fallback={<div className="flex flex-col w-full h-dvh justify-center items-center">
@@ -150,7 +160,7 @@ export default function GroupPage() {
             {isEditModalOpen && (
                 <GroupEditModal group={group!} onClose={() => setIsEditModalOpen(false)}/>
             )}
-            <ToastContainer />
+            <ToastContainer/>
         </div>
     );
 }

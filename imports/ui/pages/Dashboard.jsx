@@ -6,6 +6,7 @@ import {useFind, useSubscribe} from "meteor/react-meteor-data";
 import {Groups} from "/imports/api/groups/groups";
 import {Meteor} from "meteor/meteor";
 import dayjs from "dayjs";
+import {Helmet} from "react-helmet-async";
 
 export default function Dashboard() {
     const [isOpen, setIsOpen] = useState(false);
@@ -50,6 +51,9 @@ export default function Dashboard() {
 
     return (
         <div className="w-full space-y-2">
+            <Helmet>
+                <title>Dashboard</title>
+            </Helmet>
             <h2 className="font-bold text-3xl">Your Groups</h2>
             <ul className="grid md:grid-cols-3 sm:grid-cols-2 grid-cols-1 gap-2">
                 {/* create group */}
