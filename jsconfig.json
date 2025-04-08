@@ -9,18 +9,20 @@
         "./*"
       ],
       "meteor/mongo": [
-        "/Users/jungwoosong/.meteor/packages/mongo/2.0.2/web.browser/local_collection_driver.js",
-        "/Users/jungwoosong/.meteor/packages/mongo/2.0.2/web.browser/collection.js",
-        "/Users/jungwoosong/.meteor/packages/mongo/2.0.2/web.browser/connection_options.js",
-        "/Users/jungwoosong/.meteor/packages/mongo/2.0.2/web.browser/doc_fetcher.js",
-        "/Users/jungwoosong/.meteor/packages/mongo/2.0.2/web.browser/mongo_driver.js",
-        "/Users/jungwoosong/.meteor/packages/mongo/2.0.2/web.browser/mongo_utils.js",
-        "/Users/jungwoosong/.meteor/packages/mongo/2.0.2/web.browser/observe_multiplex.js",
-        "/Users/jungwoosong/.meteor/packages/mongo/2.0.2/web.browser/oplog_observe_driver.js",
-        "/Users/jungwoosong/.meteor/packages/mongo/2.0.2/web.browser/oplog_tailing.js",
-        "/Users/jungwoosong/.meteor/packages/mongo/2.0.2/web.browser/oplog_v2_converter.js",
-        "/Users/jungwoosong/.meteor/packages/mongo/2.0.2/web.browser/polling_observe_driver.js",
-        "/Users/jungwoosong/.meteor/packages/mongo/2.0.2/web.browser/remote_collection_driver.js"
+        "/Users/jungwoosong/.meteor/packages/mongo/2.1.1/web.browser/local_collection_driver.js",
+        "/Users/jungwoosong/.meteor/packages/mongo/2.1.1/web.browser/collection/collection.js",
+        "/Users/jungwoosong/.meteor/packages/mongo/2.1.1/web.browser/asynchronous_cursor.js",
+        "/Users/jungwoosong/.meteor/packages/mongo/2.1.1/web.browser/doc_fetcher.js",
+        "/Users/jungwoosong/.meteor/packages/mongo/2.1.1/web.browser/mongo_common.js",
+        "/Users/jungwoosong/.meteor/packages/mongo/2.1.1/web.browser/mongo_connection.js",
+        "/Users/jungwoosong/.meteor/packages/mongo/2.1.1/web.browser/mongo_driver.js",
+        "/Users/jungwoosong/.meteor/packages/mongo/2.1.1/web.browser/mongo_utils.js",
+        "/Users/jungwoosong/.meteor/packages/mongo/2.1.1/web.browser/oplog_observe_driver.js",
+        "/Users/jungwoosong/.meteor/packages/mongo/2.1.1/web.browser/collection/collection_utils.js",
+        "/Users/jungwoosong/.meteor/packages/mongo/2.1.1/web.browser/collection/methods_async.js",
+        "/Users/jungwoosong/.meteor/packages/mongo/2.1.1/web.browser/collection/methods_index.js",
+        "/Users/jungwoosong/.meteor/packages/mongo/2.1.1/web.browser/collection/methods_replication.js",
+        "/Users/jungwoosong/.meteor/packages/mongo/2.1.1/web.browser/collection/methods_sync.js"
       ],
       "meteor/reactive-var": [
         "/Users/jungwoosong/.meteor/packages/reactive-var/1.0.13/web.browser/reactive-var.js"
@@ -33,11 +35,11 @@
         "/Users/jungwoosong/.meteor/packages/es5-shim/4.8.1/web.browser/import_globals.js"
       ],
       "meteor/ecmascript": [
-        "/Users/jungwoosong/.meteor/packages/ecmascript/0.16.9/web.browser/ecmascript.js"
+        "/Users/jungwoosong/.meteor/packages/ecmascript/0.16.10/web.browser/ecmascript.js"
       ],
       "meteor/shell-server": [
-        "/Users/jungwoosong/.meteor/packages/shell-server/0.6.0/web.browser/main.js",
-        "/Users/jungwoosong/.meteor/packages/shell-server/0.6.0/web.browser/shell-server.js"
+        "/Users/jungwoosong/.meteor/packages/shell-server/0.6.1/web.browser/main.js",
+        "/Users/jungwoosong/.meteor/packages/shell-server/0.6.1/web.browser/shell-server.js"
       ],
       "meteor/hot-module-replacement": [
         "/Users/jungwoosong/.meteor/packages/hot-module-replacement/0.5.4/web.browser/hot-api.js",
@@ -49,9 +51,62 @@
         "/Users/jungwoosong/.meteor/packages/react-meteor-data/3.0.2/web.browser/suspense/index.js"
       ],
       "meteor/accounts-password": [
-        "/Users/jungwoosong/.meteor/packages/accounts-password/3.0.2/web.browser/password_client.js",
-        "/Users/jungwoosong/.meteor/packages/accounts-password/3.0.2/web.browser/email_templates.js",
-        "/Users/jungwoosong/.meteor/packages/accounts-password/3.0.2/web.browser/password_server.js"
+        "/Users/jungwoosong/.meteor/packages/accounts-password/3.1.0/web.browser/password_client.js",
+        "/Users/jungwoosong/.meteor/packages/accounts-password/3.1.0/web.browser/email_templates.js",
+        "/Users/jungwoosong/.meteor/packages/accounts-password/3.1.0/web.browser/password_server.js"
+      ],
+      "meteor/aldeed:simple-schema": [
+        "/Users/jungwoosong/.meteor/packages/aldeed_simple-schema/2.0.0/web.browser/lib/main.js",
+        "/Users/jungwoosong/.meteor/packages/aldeed_simple-schema/2.0.0/web.browser/lib/SimpleSchema.js",
+        "/Users/jungwoosong/.meteor/packages/aldeed_simple-schema/2.0.0/web.browser/lib/SimpleSchemaGroup.js",
+        "/Users/jungwoosong/.meteor/packages/aldeed_simple-schema/2.0.0/web.browser/lib/ValidationContext.js",
+        "/Users/jungwoosong/.meteor/packages/aldeed_simple-schema/2.0.0/web.browser/lib/clean.js",
+        "/Users/jungwoosong/.meteor/packages/aldeed_simple-schema/2.0.0/web.browser/lib/defaultMessages.js",
+        "/Users/jungwoosong/.meteor/packages/aldeed_simple-schema/2.0.0/web.browser/lib/doValidation.js",
+        "/Users/jungwoosong/.meteor/packages/aldeed_simple-schema/2.0.0/web.browser/lib/expandShorthand.js",
+        "/Users/jungwoosong/.meteor/packages/aldeed_simple-schema/2.0.0/web.browser/lib/humanize.js",
+        "/Users/jungwoosong/.meteor/packages/aldeed_simple-schema/2.0.0/web.browser/lib/regExp.js",
+        "/Users/jungwoosong/.meteor/packages/aldeed_simple-schema/2.0.0/web.browser/lib/clean/AutoValueRunner.js",
+        "/Users/jungwoosong/.meteor/packages/aldeed_simple-schema/2.0.0/web.browser/lib/clean/convertToProperType.js",
+        "/Users/jungwoosong/.meteor/packages/aldeed_simple-schema/2.0.0/web.browser/lib/clean/getPositionsForAutoValue.js",
+        "/Users/jungwoosong/.meteor/packages/aldeed_simple-schema/2.0.0/web.browser/lib/clean/setAutoValues.js",
+        "/Users/jungwoosong/.meteor/packages/aldeed_simple-schema/2.0.0/web.browser/lib/utility/appendAffectedKey.js",
+        "/Users/jungwoosong/.meteor/packages/aldeed_simple-schema/2.0.0/web.browser/lib/utility/dateToDateString.js",
+        "/Users/jungwoosong/.meteor/packages/aldeed_simple-schema/2.0.0/web.browser/lib/utility/forEachKeyAncestor.js",
+        "/Users/jungwoosong/.meteor/packages/aldeed_simple-schema/2.0.0/web.browser/lib/utility/getKeysWithValueInObj.js",
+        "/Users/jungwoosong/.meteor/packages/aldeed_simple-schema/2.0.0/web.browser/lib/utility/getLastPartOfKey.js",
+        "/Users/jungwoosong/.meteor/packages/aldeed_simple-schema/2.0.0/web.browser/lib/utility/getParentOfKey.js",
+        "/Users/jungwoosong/.meteor/packages/aldeed_simple-schema/2.0.0/web.browser/lib/utility/index.js",
+        "/Users/jungwoosong/.meteor/packages/aldeed_simple-schema/2.0.0/web.browser/lib/utility/isEmptyObject.js",
+        "/Users/jungwoosong/.meteor/packages/aldeed_simple-schema/2.0.0/web.browser/lib/utility/isObjectWeShouldTraverse.js",
+        "/Users/jungwoosong/.meteor/packages/aldeed_simple-schema/2.0.0/web.browser/lib/utility/isPromiseLike.js",
+        "/Users/jungwoosong/.meteor/packages/aldeed_simple-schema/2.0.0/web.browser/lib/utility/looksLikeModifier.js",
+        "/Users/jungwoosong/.meteor/packages/aldeed_simple-schema/2.0.0/web.browser/lib/utility/merge.js",
+        "/Users/jungwoosong/.meteor/packages/aldeed_simple-schema/2.0.0/web.browser/lib/validation/allowedValuesValidator.js",
+        "/Users/jungwoosong/.meteor/packages/aldeed_simple-schema/2.0.0/web.browser/lib/validation/requiredValidator.js",
+        "/Users/jungwoosong/.meteor/packages/aldeed_simple-schema/2.0.0/web.browser/lib/validation/typeValidator/doArrayChecks.js",
+        "/Users/jungwoosong/.meteor/packages/aldeed_simple-schema/2.0.0/web.browser/lib/validation/typeValidator/doDateChecks.js",
+        "/Users/jungwoosong/.meteor/packages/aldeed_simple-schema/2.0.0/web.browser/lib/validation/typeValidator/doNumberChecks.js",
+        "/Users/jungwoosong/.meteor/packages/aldeed_simple-schema/2.0.0/web.browser/lib/validation/typeValidator/doStringChecks.js",
+        "/Users/jungwoosong/.meteor/packages/aldeed_simple-schema/2.0.0/web.browser/lib/validation/typeValidator/index.js"
+      ],
+      "meteor/dynamic-import": [
+        "/Users/jungwoosong/.meteor/packages/dynamic-import/0.7.4/web.browser/client.js",
+        "/Users/jungwoosong/.meteor/packages/dynamic-import/0.7.4/web.browser/cache.js",
+        "/Users/jungwoosong/.meteor/packages/dynamic-import/0.7.4/web.browser/common.js",
+        "/Users/jungwoosong/.meteor/packages/dynamic-import/0.7.4/web.browser/dynamic-versions.js",
+        "/Users/jungwoosong/.meteor/packages/dynamic-import/0.7.4/web.browser/security.js",
+        "/Users/jungwoosong/.meteor/packages/dynamic-import/0.7.4/web.browser/server.js"
+      ],
+      "meteor/reywood:publish-composite": [
+        "/Users/jungwoosong/.meteor/packages/reywood_publish-composite/1.9.0/web.browser/lib/publish_composite.js",
+        "/Users/jungwoosong/.meteor/packages/reywood_publish-composite/1.9.0/web.browser/lib/doc_ref_counter.js",
+        "/Users/jungwoosong/.meteor/packages/reywood_publish-composite/1.9.0/web.browser/lib/logging.js",
+        "/Users/jungwoosong/.meteor/packages/reywood_publish-composite/1.9.0/web.browser/lib/publication.js",
+        "/Users/jungwoosong/.meteor/packages/reywood_publish-composite/1.9.0/web.browser/lib/subscription.js",
+        "/Users/jungwoosong/.meteor/packages/reywood_publish-composite/1.9.0/web.browser/lib/published_document.js",
+        "/Users/jungwoosong/.meteor/packages/reywood_publish-composite/1.9.0/web.browser/lib/published_document_list.js",
+        "/Users/jungwoosong/.meteor/packages/reywood_publish-composite/1.9.0/web.browser/lib/utils.js"
       ]
     }
   },

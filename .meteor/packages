@@ -24,3 +24,5 @@ accounts-password@3.1.0
 react-meteor-accounts
 aldeed:simple-schema
 dynamic-import
+zodern:types
+tunguska:reactive-aggregate
