@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, {useState} from "react";
 import {useNavigate, useParams, useSearchParams} from "react-router-dom";
 import {Meteor} from "meteor/meteor";
 import {toast} from "react-toastify";
@@ -7,29 +7,16 @@ import GroupEditModal from "/imports/ui/components/Group/GroupEditModal";
 
 import {GroupDetail} from "/imports/types/types";
 
-export default function GroupDetail() {
+export default function GroupDetail({ group }: { group?: GroupDetail }) {
     const {groupId} = useParams();
     const [searchParams, setSearchParams] = useSearchParams();
     const navigate = useNavigate();
 
     const userId = Meteor.userId();
 
-
     const [isEditModalOpen, setIsEditModalOpen] = useState(false);
     const [inviteURL, setInviteURL] = useState("");
-    const [group, setGroup] = useState<GroupDetail>();
 
-    async function fetchGroupDetail() {
-        try {
-            const returnedGroup = await Meteor.callAsync("groups.get", groupId);
-            console.log(returnedGroup);
-            setGroup(returnedGroup[0]);
-
-        } catch (error) {
-            console.error("Error fetching group detail:", error);
-            toast.error("Failed to fetch group detail");
-        }
-    }
 
     const handleInviteBtnClick = async () => {
         if (!inviteURL) {
@@ -65,13 +52,8 @@ export default function GroupDetail() {
         }
     }
 
-    useEffect(() => {
-        fetchGroupDetail();
-    }, []);
-
     return (
         <div className="relative space-y-3 bg-white rounded-lg p-4 border">
-            {JSON.stringify(group, null, 2)}
             <div className="md:hidden">
                 <input value={searchParams.get("date")?.toString()} type="date"
                        className="p-2 border rounded-lg"
