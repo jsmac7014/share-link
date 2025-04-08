@@ -25,7 +25,7 @@ export default function HomePage() {
                         <br/>
                     </p>
                     <Link to="/sign-in">
-                        <button className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition duration-200">
+                        <button className="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition duration-200">
                             Get Started
                         </button>
                     </Link>

@@ -29,7 +29,7 @@ export default function SignInPage() {
 
     return (
         <div className="flex flex-col items-center justify-center max-w-md min-h-dvh gap-5 mx-auto p-4">
-            <form className="flex flex-col w-full gap-2 p-8 bg-white rounded-md shadow-md" onSubmit={handleSubmit}>
+            <form className="flex flex-col w-full gap-2 p-8 bg-white rounded-lg shadow-md" onSubmit={handleSubmit}>
                 <div className="space-y-2 mb-8 flex flex-col items-center">
                     <div className="flex items-center space-x-2">
                         <img
@@ -49,7 +49,7 @@ export default function SignInPage() {
                         onChange={(e) => setUsername(e.target.value)}
                         name="username"
                         type="text"
-                        className="w-full p-2 mt-2 border border-gray-300 rounded-md bg-gray-50"
+                        className="w-full p-2 mt-2 border border-gray-300 rounded-lg bg-gray-50"
                     />
                 </div>
                 <div>
@@ -61,12 +61,12 @@ export default function SignInPage() {
                         onChange={(e) => setPassword(e.target.value)}
                         name="password"
                         type="password"
-                        className="w-full p-2 mt-2 border border-gray-300 rounded-md bg-gray-50"
+                        className="w-full p-2 mt-2 border border-gray-300 rounded-lg bg-gray-50"
                     />
                 </div>
                 {error && <div className="text-sm text-red-500">{error}</div>}
                 <div className="mt-4">
-                    <button className="w-full p-2 text-white bg-blue-600 rounded-md" type="submit">
+                    <button className="w-full p-2 text-white bg-blue-600 rounded-lg" type="submit">
                         Sign In
                     </button>
                     <Link to="/sign-up" className="block mt-2 text-sm text-center text-blue-600">

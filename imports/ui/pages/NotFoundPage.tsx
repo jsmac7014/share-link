@@ -21,7 +21,7 @@ export default function NotFoundPage() {
                     You can go back to the <Link to="/dashboard" className="text-blue-500">dashboard</Link>.
                 </p>
             )}
-            <Link to="/" className="p-2 rounded border border-gray-200 bg-white">
+            <Link to="/" className="p-2 rounded-lg border border-gray-200 bg-white">
                 Go back to homepage
             </Link>
         </div>
