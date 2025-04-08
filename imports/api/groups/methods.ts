@@ -27,12 +27,40 @@ Meteor.methods({
         }
 
         // Find the group by ID
-        const group = await Groups.findOneAsync(groupId);
+        const group = Groups.rawCollection();
+        const pipeline = [
+            {$match: {_id: groupId}},
+            {
+                $lookup: {
+                    from: 'users',
+                    localField: 'owner',
+                    foreignField: '_id',
+                    as: 'ownerInfo'
+                }
+            }, {
+                $unwind: '$ownerInfo'
+            }, {
+                $project: {
+                    _id: 1,
+                    name: 1,
+                    description: 1,
+                    members: 1,
+                    createdAt: 1,
+                    // Include owner information as object
+                    ownerInfo: {
+                        _id: '$ownerInfo._id',
+                        name: '$ownerInfo.name', // Assuming the field is 'name'
+                        username: '$ownerInfo.username', // Assuming the field is 'username'
+                    }
+                }
+            }
+        ];
+
         if (!group) {
             throw new Meteor.Error("group-not-found", "Group not found.");
         }
 
-        return group;
+        return await group.aggregate(pipeline).toArray();
     },
     "groups.insert": async function (group: Group) {
         check(group, {
@@ -60,7 +88,7 @@ Meteor.methods({
 
         // check if the user is the owner of the group
         const currentGroup = await Groups.findOneAsync(groupId);
-        if(currentGroup?.owner !== this.userId) {
+        if (currentGroup?.owner !== this.userId) {
             throw new Meteor.Error("not-authorized", "You are not authorized to update this group.");
         }
 
@@ -80,7 +108,7 @@ Meteor.methods({
         // check if the user is the owner of the group
         // you cannot add owner as member
         console.log(currentGroup?.owner == this.userId);
-        if(currentGroup?.owner == this.userId) {
+        if (currentGroup?.owner == this.userId) {
             throw new Meteor.Error("not-authorized", "You cannot add owner as member.");
         }
         // check if the user is already a member
@@ -102,9 +130,9 @@ Meteor.methods({
 
         // check if the user is the owner of the group or the member who is leaving
         const currentGroup = await Groups.findOneAsync(groupId);
-        if(currentGroup?.owner == this.userId) {
+        if (currentGroup?.owner == this.userId) {
             throw new Meteor.Error("not-authorized", "You cannot leave the group as owner.");
-        } else if(this.userId !== userId) {
+        } else if (this.userId !== userId) {
             throw new Meteor.Error("not-authorized", "You are not authorized to remove this member.");
         }
 
