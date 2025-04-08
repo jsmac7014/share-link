@@ -25,8 +25,11 @@ export default function GroupLinkForm() {
                 onChange={(e) => setLink(e.target.value)}
                 type="text"
                 placeholder="Enter link"
-                className="flex-1 p-2 border border-gray-300 rounded-lg"/>
-            <button className="p-2 bg-blue-500 rounded-lg text-white w-full" onClick={addLink}>Add</button>
+                className="flex-1 p-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-offset-1 focus:ring-blue-500 outline-none"/>
+            <button
+                className="p-2 bg-blue-500 rounded-lg text-white w-full outline-none focus:ring-2 focus:ring-offset-1 focus:ring-blue-500"
+                onClick={addLink}>Add
+            </button>
         </div>
     )
 }

@@ -15,6 +15,7 @@
     "dayjs": "^1.11.13",
     "lodash": "^4.17.21",
     "meteor-node-stubs": "^1.2.1",
+    "motion": "^12.6.3",
     "postcss": "^8.4.12",
     "postcss-load-config": "^3.1.4",
     "puppeteer": "^24.6.0",

@@ -117,9 +117,7 @@ export default function GroupDetail({ group }: { group?: GroupDetail }) {
                     </button>
                 </div>
             )}
-            {isEditModalOpen && (
-                <GroupEditModal group={group!} onClose={() => setIsEditModalOpen(false)}/>
-            )}
+            <GroupEditModal group={group!} onClose={() => setIsEditModalOpen(false)} isOpen={isEditModalOpen}/>
         </div>
     );
 }
