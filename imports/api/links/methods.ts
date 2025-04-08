@@ -2,7 +2,7 @@ import {Meteor} from "meteor/meteor";
 import {Links} from "/imports/api/links/links";
 import {check} from "meteor/check";
 import cheerio from 'cheerio';
-import type { Link } from "/imports/types/types";
+import type {Link} from "/imports/types/types";
 
 Meteor.methods({
     "insert.link": async function (link: Object) {
@@ -18,18 +18,23 @@ Meteor.methods({
 
         // fetch meta data from the link
         try {
+            // if link is amazon.com
+            // use Googlebot user agent header
+            // else use default user agent header
+            const isAmazon = link.link.includes("amazon.com");
+            let userAgent = isAmazon ? "Mozilla/5.0 AppleWebKit/537.36 (KHTML, like Gecko; compatible; Googlebot/2.1; +http://www.google.com/bot.html) Chrome/58.0.3029.110 Safari/537.3"
+                : "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.3";
             const response = await fetch(link.link, {
                 method: 'GET',
                 headers: {
-                    // 'Cache-Control': 'max-age=0',
-                //     user agent as bot
-                    'User-Agent': 'Mozilla/5.0 AppleWebKit/537.36 (KHTML, like Gecko; compatible; Googlebot/2.1; +http://www.google.com/bot.html) Chrome/58.0.3029.110 Safari/537.3',
+                    'Cache-Control': 'max-age=0',
+                    'User-Agent': userAgent,
                 }
             })
             const statusCode = response.status;
             const html = await response.text();
 
-            if(statusCode !== 200) {
+            if (statusCode !== 200) {
                 throw new Meteor.Error("link-fetch-error", "This link cannot be fetched.");
             }
 
