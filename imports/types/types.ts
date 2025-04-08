@@ -23,3 +23,17 @@ export type Invite = {
     createdAt: Date;
     expiresAt: Date;
 }
+export type GroupDetail = {
+    _id?: string;
+    name: string;
+    description?: string;
+    owner: string;
+    members?: string[];
+    createdAt: Date;
+    ownerInfo: {
+        _id: string;
+        name: string;
+        username: string;
+    }
+}
+
