@@ -12,6 +12,9 @@ export default function GroupDetail() {
     const [searchParams, setSearchParams] = useSearchParams();
     const navigate = useNavigate();
 
+    const userId = Meteor.userId();
+
+
     const [isEditModalOpen, setIsEditModalOpen] = useState(false);
     const [inviteURL, setInviteURL] = useState("");
     const [group, setGroup] = useState<GroupDetail>();
@@ -21,6 +24,7 @@ export default function GroupDetail() {
             const returnedGroup = await Meteor.callAsync("groups.get", groupId);
             console.log(returnedGroup);
             setGroup(returnedGroup[0]);
+
         } catch (error) {
             console.error("Error fetching group detail:", error);
             toast.error("Failed to fetch group detail");
@@ -91,7 +95,7 @@ export default function GroupDetail() {
                     )}
                 </div>
             </div>
-            {group?.owner === Meteor.userId() ? (
+            {group?.ownerInfo._id == userId ? (
                 <div className="inline-flex gap-2">
                     <button
                         title="Edit group"

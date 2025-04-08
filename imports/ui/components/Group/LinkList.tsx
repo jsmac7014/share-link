@@ -1,19 +1,18 @@
 import React from 'react';
 import {Meteor} from "meteor/meteor";
 import {useFind, useSubscribe} from "meteor/react-meteor-data";
-import {Links} from "/imports/api/links/links";
-
+import {LinksWithUserInfo} from "/imports/api/client/linksWithUserInfo";
 
 export default function LinkList({groupId, date}: { groupId: string, date: string }) {
     // Get Timezone of the user
     const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
     try {
-        useSubscribe("links", groupId, date, timezone);
+        useSubscribe("links.with.userInfo", groupId, date, timezone);
     } catch (error) {
         console.error("Error subscribing to links:", error);
     }
 
-    const links = useFind(() => Links.find({groupId: groupId}, {sort: {createdAt: -1}}));
+    const links = useFind(() => LinksWithUserInfo.find({}, {sort: {createdAt: -1}}));
 
     async function deleteLink(linkId: string | undefined) {
         await Meteor.callAsync("delete.link", linkId);
@@ -58,6 +57,8 @@ export default function LinkList({groupId, date}: { groupId: string, date: strin
                                         <div className="w-11/12">
                                             <h3 className="text-lg font-bold line-clamp-2">{link.title}</h3>
                                             <p className="line-clamp-2">{link.description}</p>
+                                            @{link.userInfo?.username}
+
                                         </div>
                                         <div>
                                             <p className="text-gray-500 place-self-end text-xs">{new Date(link.createdAt).toLocaleTimeString()}</p>
