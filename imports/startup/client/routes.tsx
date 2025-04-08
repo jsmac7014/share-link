@@ -10,11 +10,13 @@ import {useTracker} from "meteor/react-meteor-data";
 import ProfilePage from "/imports/ui/pages/ProfilePage";
 import InviteRedirect from "/imports/ui/pages/InviteRedirect";
 import HomePage from "/imports/ui/pages/HomePage";
+import NotFoundPage from "/imports/ui/pages/NotFoundPage";
 
 const router = createBrowserRouter([
     {
         path: "/",
         element: <MainLayout/>,
+        errorElement: <NotFoundPage/>,
         children: [
             {
                 path: "/dashboard",
