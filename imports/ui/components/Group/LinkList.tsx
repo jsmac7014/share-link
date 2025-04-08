@@ -39,7 +39,7 @@ export default function LinkList({groupId, date}: { groupId: string, date: strin
             {links.map((link) => (
                     <li key={link._id?.toString()}>
                         <div className="relative">
-                            <button className="absolute top-2 right-2 p-1 rounded"
+                            <button className="absolute top-2 right-2 p-1 rounded-lg"
                                     onClick={() => deleteLink(link._id)}>
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                                      strokeWidth={1.5} stroke="currentColor" className="w-5 h-5">
@@ -49,9 +49,9 @@ export default function LinkList({groupId, date}: { groupId: string, date: strin
                             </button>
                             <a href={link.url} target="_blank" rel="noopener noreferrer" className="block">
                                 <div
-                                    className="flex bg-white w-full h-full p-2 gap-2 border border-gray-300 rounded min-h-32">
+                                    className="flex bg-white w-full h-full p-2 gap-2 border border-gray-300 rounded-lg min-h-32">
                                     {link.imageLink && (
-                                        <img src={link.imageLink} className="w-32 object-cover rounded"
+                                        <img src={link.imageLink} className="w-32 object-cover rounded-lg"
                                              alt={link.title}/>
                                     )}
                                     <div className="w-full flex flex-col min-h-full justify-between">
