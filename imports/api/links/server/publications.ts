@@ -13,7 +13,7 @@ dayjs.extend(timezone);
 
 Meteor.publish("links.with.userInfo", async function (groupId, date, timezone) {
   if (!this.userId) {
-    throw new Meteor.Error("not-authorized");
+    return this.ready();
   }
 
   if (!groupId || !date || !timezone) {
@@ -69,7 +69,8 @@ Meteor.publish("links.with.userInfo", async function (groupId, date, timezone) {
 
 Meteor.publish("links.group.by.domain", async function (groupId) {
   if (!this.userId) {
-    throw new Meteor.Error("not-authorized");
+    return this.ready();
+    // throw new Meteor.Error("not-authorized");
   }
 
   if (!groupId) {
