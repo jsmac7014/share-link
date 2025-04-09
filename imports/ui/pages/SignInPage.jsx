@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import Meteor from "meteor/meteor";
+import { Meteor } from "meteor/meteor";
 import { Link, useNavigate } from "react-router-dom";
 
 export default function SignInPage() {
