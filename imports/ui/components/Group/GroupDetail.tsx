@@ -5,12 +5,16 @@ import { toast } from "react-toastify";
 import dayjs from "dayjs";
 import GroupEditModal from "/imports/ui/components/Group/GroupEditModal";
 
-import { GroupDetail } from "/imports/types/types";
+import { useFind, useSubscribe } from "meteor/react-meteor-data";
+import { GroupDetail as GroupDetailCollection } from "/imports/api/client/groupDetail";
 
-export default function GroupDetail({ group }: { group?: GroupDetail }) {
+export default function GroupDetail() {
   const { groupId } = useParams();
   const [searchParams, setSearchParams] = useSearchParams();
   const navigate = useNavigate();
+
+  useSubscribe("group.detail", groupId);
+  const group = useFind(() => GroupDetailCollection.find())[0];
 
   const userId = Meteor.userId();
 
@@ -21,13 +25,13 @@ export default function GroupDetail({ group }: { group?: GroupDetail }) {
     if (!inviteURL) {
       const url = await Meteor.callAsync("insert.invite", groupId);
       setInviteURL(url);
-      toast("Invite link create!\n Tap again to copy to clipboard ", { type: "info" });
+      toast.info("Invite link create!\n Tap again to copy to clipboard ");
     } else {
       try {
         await navigator.clipboard.writeText(inviteURL);
-        toast("Invite link copied!", { type: "success" });
+        toast.success("Invite link copied!");
       } catch (err) {
-        toast.error("Copy failed", { type: "error" });
+        toast.error("Copy failed");
       }
     }
   };
@@ -68,7 +72,7 @@ export default function GroupDetail({ group }: { group?: GroupDetail }) {
           {/*number of members*/}
           {/*  owner name  */}
           <p className="text-gray-500 text-sm">@{group?.ownerInfo.username}</p>
-          {group?.members?.length! > 0 && (
+          {group?.members != null && group?.members?.length > 0 && (
             <p className="text-gray-500 text-sm">{group?.members?.length} members</p>
           )}
         </div>
