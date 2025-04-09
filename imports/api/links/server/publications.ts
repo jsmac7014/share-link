@@ -4,7 +4,8 @@ import dayjs from "dayjs";
 import utc from "dayjs/plugin/utc";
 import timezone from "dayjs/plugin/timezone";
 import { Groups } from "/imports/api/groups/groups";
-// @ts-ignore
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-expect-error
 import { ReactiveAggregate } from "meteor/tunguska:reactive-aggregate";
 
 dayjs.extend(utc);
@@ -61,8 +62,53 @@ Meteor.publish("links.with.userInfo", async function (groupId, date, timezone) {
       },
     },
   ];
-  console.log("Publishing links.with.userInfo", groupId, date, timezone); // 로그 확인
   ReactiveAggregate(this, Links, pipeline, {
     clientCollection: "linksWithUserInfo",
+  });
+});
+
+Meteor.publish("links.group.by.domain", async function (groupId) {
+  if (!this.userId) {
+    throw new Meteor.Error("not-authorized");
+  }
+
+  if (!groupId) {
+    throw new Meteor.Error("Missing arguments");
+  }
+
+  // check if the user is a member of the group or the owner
+  const group = await Groups.findOneAsync({ _id: groupId });
+  if (!group) {
+    throw new Meteor.Error("Group not found");
+  } else if (group.owner !== this.userId && !group.members?.includes(this.userId)) {
+    throw new Meteor.Error("not-authorized");
+  }
+
+  const pipeline = [
+    {
+      $match: {
+        groupId: groupId,
+      },
+    },
+    {
+      $addFields: {
+        url: {
+          $arrayElemAt: [{ $split: [{ $arrayElemAt: [{ $split: ["$url", "//"] }, 1] }, "/"] }, 0],
+        },
+      },
+    },
+    {
+      $group: {
+        _id: "$url",
+        count: { $sum: 1 },
+      },
+    },
+    {
+      $sort: { count: -1 }, // (선택) 도메인별로 많은 순서대로 정렬
+    },
+  ];
+
+  ReactiveAggregate(this, Links, pipeline, {
+    clientCollection: "linksByDomain",
   });
 });
