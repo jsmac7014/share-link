@@ -1,4 +1,5 @@
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
+import Meteor from "meteor/meteor";
 import { Accounts } from "meteor/accounts-base";
 import { useNavigate } from "react-router-dom";
 
@@ -50,7 +51,7 @@ export default function SignUpPage() {
     if (Meteor.userId()) {
       navigate("/dashboard");
     }
-  })
+  });
 
   return (
     <div className="flex flex-col items-center justify-center max-w-md min-h-dvh gap-5 mx-auto p-4">
@@ -60,10 +61,7 @@ export default function SignUpPage() {
       >
         <div className="space-y-2 mb-8 flex flex-col items-center">
           <div className="flex items-center space-x-2">
-            <img
-                src="/icon-512-maskable.png"
-                alt="Linkly Logo"
-                className="w-6 h-6 rounded" />
+            <img src="/icon-512-maskable.png" alt="Linkly Logo" className="w-6 h-6 rounded" />
             <h4 className="text-xl font-bold text-blue-500 text-center">Linkly</h4>
           </div>
           <h3 className="text-4xl text-gray-700 text-center">Create Account</h3>
@@ -118,10 +116,7 @@ export default function SignUpPage() {
         </div>
         {error && <p className="text-sm text-red-500">{error}</p>}
         <div className="mt-4">
-          <button
-            className="w-full p-2 text-white bg-blue-600 rounded-lg"
-            type="submit"
-          >
+          <button className="w-full p-2 text-white bg-blue-600 rounded-lg" type="submit">
             Create Account
           </button>
         </div>
