@@ -6,29 +6,22 @@ import { Helmet } from "react-helmet-async";
 import dayjs from "dayjs";
 import { toast, ToastContainer } from "react-toastify";
 import customParseFormat from "dayjs/plugin/customParseFormat";
-import Calendar from "react-calendar";
-import "../styles/calendar.css";
 
 import GroupDetail from "/imports/ui/components/Group/GroupDetail";
 import GroupLinkForm from "/imports/ui/components/Group/GroupLinkForm";
 import { GroupDetail as GroupDetailType } from "/imports/types/types";
+import GroupFilter from "/imports/ui/components/Group/GroupFilter";
 
 const LinkList = lazy(() => import("/imports/ui/components/Group/LinkList"));
 
 dayjs.extend(customParseFormat);
 
 export default function GroupPage() {
-  const [isCalendarOpen] = useState(false);
   const [group, setGroup] = useState<GroupDetailType>();
 
   const { groupId } = useParams();
-  const [searchParams, setSearchParams] = useSearchParams();
+  const [searchParams] = useSearchParams();
   const navigate = useNavigate();
-
-  function changeDate(date: Date) {
-    date.setDate(date.getDate() + 1);
-    setSearchParams({ date: date.toISOString().split("T")[0] });
-  }
 
   function validateDateParam() {
     const dateString = searchParams.get("date");
@@ -62,19 +55,10 @@ export default function GroupPage() {
         <title>{group?.name}</title>
         <meta name="description" content={group?.description} />
       </Helmet>
-      <div className={`md:block md:col-span-4 ${isCalendarOpen ? "block" : "hidden"}`}>
-        <Calendar
-          onClickDay={(date) => changeDate(date)}
-          className="w-full h-fit"
-          selectRange={false}
-          value={
-            dayjs(searchParams.get("date"), "YYYY-MM-DD", true).isValid()
-              ? dayjs(searchParams.get("date")).toDate()
-              : dayjs().format("YYYY-MM-DD")
-          }
-        />
+      <div className="md:flex md:flex-col md:gap-2 md:w-full md:col-span-4 hidden">
+        <GroupFilter />
       </div>
-      <div className="col-span-8 flex flex-col w-full h-full space-y-2">
+      <div className="col-span-8 flex flex-col w-full h-full space-y-2 mt-9">
         <GroupDetail group={group} />
         {searchParams.get("date") === dayjs().format("YYYY-MM-DD") && <GroupLinkForm />}
         <Suspense
