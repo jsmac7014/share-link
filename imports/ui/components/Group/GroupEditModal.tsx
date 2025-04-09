@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { Meteor } from "meteor/meteor";
-import { useNavigate } from "react-router-dom";
 import Modal from "/imports/ui/components/Modal";
 import { GroupDetail } from "/imports/types/types";
 
@@ -15,7 +14,6 @@ export default function GroupEditModal({
 }) {
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
-  const navigate = useNavigate();
 
   async function updateGroup() {
     const groupId = group._id;
@@ -25,8 +23,8 @@ export default function GroupEditModal({
     };
 
     await Meteor.callAsync("groups.update", groupId, updatedGroup);
-    // refresh using react router
-    navigate(0);
+
+    onClose();
   }
 
   useEffect(() => {
