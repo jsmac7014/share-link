@@ -18,16 +18,16 @@ export default function LinkList({ groupId, date }: { groupId: string; date: str
   async function deleteLink(linkId: string | undefined) {
     try {
       await Meteor.callAsync("delete.link", linkId);
-      toast("Link deleted successfully", { type: "success" });
-    } catch (error: any) {
-      toast(error.reason, { type: "error" });
+      toast.success("Link deleted!");
+    } catch (error) {
+      toast.error("Link deleted failed");
     }
   }
 
   if (!links || links.length === 0) {
     return (
-      <div className="w-full h-full flex flex-col items-center justify-center p-4">
-        <div className="inline-flex gap-1 items-center">
+      <div className="w-full h-96 flex flex-col items-center justify-center p-4">
+        <div className="h-full inline-flex gap-1 items-center">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
@@ -53,7 +53,7 @@ export default function LinkList({ groupId, date }: { groupId: string; date: str
       {links.map((link) => (
         <li key={link._id?.toString()} className="w-full">
           <a href={link.url} target="_blank" rel="noopener noreferrer" className="w-full">
-            <div className="flex bg-white w-full h-full gap-2 border border-gray-300 rounded-lg shadow-sm hover:shadow-md transition duration-200 ease-in-out">
+            <div className="flex bg-white w-full h-full gap-2 border border-gray-200 rounded-lg shadow-sm hover:shadow-md transition duration-200 ease-in-out">
               {link.imageLink && (
                 <img
                   src={link.imageLink}

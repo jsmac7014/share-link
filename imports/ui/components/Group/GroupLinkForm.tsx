@@ -56,7 +56,7 @@ export default function GroupLinkForm() {
   return (
     <div className="w-full flex flex-row gap-1 flex-wrap">
       {/* Preview */}
-      <div className="w-full flex flex-col bg-white rounded-lg p-3 gap-2">
+      <div className="w-full flex flex-col bg-white rounded-lg p-3 gap-2 shadow-sm border border-gray-200">
         <h1 className="text-lg font-semibold text-zinc-800">Preview</h1>
         <div className="flex flex-row gap-2">
           <img
@@ -74,7 +74,7 @@ export default function GroupLinkForm() {
               disabled={isDisabled}
               type="text"
               placeholder="Preview Title"
-              className="w-full p-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-offset-1 focus:ring-blue-500 outline-none disabled:bg-white/50"
+              className="w-full p-2 border  border-gray-200  rounded-lg focus:ring-2 focus:ring-offset-1 focus:ring-blue-500 outline-none disabled:bg-white/50"
             />
             <textarea
               onChange={(e) => setPreview({ ...preview, description: e.target.value })}
@@ -82,7 +82,7 @@ export default function GroupLinkForm() {
               disabled={isDisabled}
               placeholder="Preview Description"
               rows={4}
-              className="w-full min-h-32 p-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-offset-1 focus:ring-blue-500 outline-none disabled:bg-white/50"
+              className="w-full min-h-32 p-2 border  border-gray-200  rounded-lg focus:ring-2 focus:ring-offset-1 focus:ring-blue-500 outline-none disabled:bg-white/50"
             />
           </div>
         </div>
@@ -99,7 +99,7 @@ export default function GroupLinkForm() {
         onChange={(e) => setUrl(e.target.value)}
         type="text"
         placeholder="Enter link"
-        className="flex-1 p-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-offset-1 focus:ring-blue-500 outline-none"
+        className="flex-1 p-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-offset-1 focus:ring-blue-500 outline-none"
       />
       <button
         className="p-2 bg-white rounded-lg text-zinc-800 hover:bg-gray-50 border border-gray-200 w-full outline-none focus:ring-2 focus:ring-offset-1 focus:ring-blue-500"

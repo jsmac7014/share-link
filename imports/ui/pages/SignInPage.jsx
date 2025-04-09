@@ -50,7 +50,7 @@ export default function SignInPage() {
             onChange={(e) => setUsername(e.target.value)}
             name="username"
             type="text"
-            className="w-full p-2 mt-2 border border-gray-300 rounded-lg bg-gray-50"
+            className="w-full p-2 mt-2 border  border-gray-200 rounded-lg bg-gray-50"
           />
         </div>
         <div>
@@ -62,7 +62,7 @@ export default function SignInPage() {
             onChange={(e) => setPassword(e.target.value)}
             name="password"
             type="password"
-            className="w-full p-2 mt-2 border border-gray-300 rounded-lg bg-gray-50"
+            className="w-full p-2 mt-2 border  border-gray-200 rounded-lg bg-gray-50"
           />
         </div>
         {error && <div className="text-sm text-red-500">{error}</div>}

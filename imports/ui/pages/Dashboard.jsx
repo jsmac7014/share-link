@@ -58,7 +58,7 @@ export default function Dashboard() {
         {/* create group */}
         <button
           onClick={handleOpenModal}
-          className="w-full border-2 border-gray-300 border-dotted p-3 rounded-lg flex flex-row items-center gap-2 cursor-pointer text-gray-500"
+          className="w-full border-2 border-gray-200  border-dotted p-3 rounded-lg flex flex-row items-center gap-2 cursor-pointer text-gray-500"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -104,13 +104,13 @@ export default function Dashboard() {
       <Modal onClose={handleCloseModal} title={"Create Group"} isOpen={isOpen}>
         <div className="flex flex-col space-y-2">
           <input
-            className="border border-gray-300 p-2 rounded-lg"
+            className="border  border-gray-200  p-2 rounded-lg"
             type="text"
             placeholder="Group Name"
             onChange={(e) => setGroupName(e.target.value)}
           />
           <textarea
-            className="border border-gray-300 p-2 rounded-lg"
+            className="border  border-gray-200  p-2 rounded-lg"
             placeholder="Group Description"
             onChange={(e) => setGroupDescription(e.target.value)}
           />

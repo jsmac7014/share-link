@@ -2,7 +2,7 @@
     width: 350px;
     max-width: 100%;
     background: white;
-    border: 1px solid oklch(92.8% 0.006 264.531);
+    /*border: 1px solid oklch(92.8% 0.006 264.531);*/
     border-radius: 0.5em;
     font-family: 'Arial', 'Helvetica', sans-serif;
     line-height: 1.125em;

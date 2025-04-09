@@ -75,7 +75,7 @@ export default function SignUpPage() {
             onChange={(e) => setName(e.target.value)}
             id="name"
             type="text"
-            className="w-full p-2 mt-2 border border-gray-300 rounded-lg bg-gray-50"
+            className="w-full p-2 mt-2 border border-gray-200 rounded-lg bg-gray-50"
           />
         </div>
         <div>
@@ -87,7 +87,7 @@ export default function SignUpPage() {
             onChange={(e) => setUsername(e.target.value)}
             id="username"
             type="text"
-            className="w-full p-2 mt-2 border border-gray-300 rounded-lg bg-gray-50"
+            className="w-full p-2 mt-2 border  border-gray-200  rounded-lg bg-gray-50"
           />
         </div>
         <div>
@@ -99,7 +99,7 @@ export default function SignUpPage() {
             onChange={(e) => setPassword(e.target.value)}
             id="password"
             type="password"
-            className="w-full p-2 mt-2 border border-gray-300 rounded-lg bg-gray-50"
+            className="w-full p-2 mt-2 border  border-gray-200 rounded-lg bg-gray-50"
           />
         </div>
         <div>
@@ -111,7 +111,7 @@ export default function SignUpPage() {
             onChange={(e) => setConfirmPassword(e.target.value)}
             id="confirmPassword"
             type="password"
-            className="w-full p-2 mt-2 border border-gray-300 rounded-lg bg-gray-50"
+            className="w-full p-2 mt-2 border  border-gray-200  rounded-lg bg-gray-50"
           />
         </div>
         {error && <p className="text-sm text-red-500">{error}</p>}

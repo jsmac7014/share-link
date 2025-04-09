@@ -52,7 +52,7 @@ export default function GroupDetail({ group }: { group?: GroupDetail }) {
   }
 
   return (
-    <div className="relative space-y-3 bg-white rounded-lg p-4 border">
+    <div className="relative space-y-3 bg-white rounded-lg p-4 border shadow-sm">
       <div className="md:hidden">
         <input
           value={searchParams.get("date")?.toString()}
