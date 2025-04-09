@@ -3,6 +3,7 @@ import { Meteor } from "meteor/meteor";
 import { useFind, useSubscribe } from "meteor/react-meteor-data";
 import { LinksWithUserInfo } from "/imports/api/client/linksWithUserInfo";
 import { toast } from "react-toastify";
+import { motion } from "motion/react";
 
 export default function LinkList({ groupId, date }: { groupId: string; date: string }) {
   // Get Timezone of the user
@@ -20,13 +21,19 @@ export default function LinkList({ groupId, date }: { groupId: string; date: str
       await Meteor.callAsync("delete.link", linkId);
       toast.success("Link deleted!");
     } catch (error) {
-      toast.error("Link deleted failed");
+      toast.error(error?.toString());
     }
   }
 
   if (!links || links.length === 0) {
     return (
-      <div className="w-full h-96 flex flex-col items-center justify-center p-4">
+      <motion.div
+        initial={{ opacity: 0, scale: 0.95 }}
+        animate={{ opacity: 1, scale: 1 }}
+        exit={{ opacity: 0, scale: 0.8, transition: { duration: 1 } }}
+        transition={{ type: "tween", duration: 0.2 }}
+        className="w-full h-96 flex flex-col items-center justify-center p-4"
+      >
         <div className="h-full inline-flex gap-1 items-center">
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -44,14 +51,28 @@ export default function LinkList({ groupId, date }: { groupId: string; date: str
           </svg>
           <span className="text-gray-500">No links found.</span>
         </div>
-      </div>
+      </motion.div>
     );
   }
 
   return (
-    <ul className="flex flex-col w-full gap-1">
+    <motion.ul
+      className="flex flex-col w-full gap-1"
+      layout
+      initial={{ opacity: 0, scale: 0.95 }}
+      animate={{ opacity: 1, scale: 1 }}
+      exit={{ opacity: 0, scale: 0.8, transition: { duration: 1 } }}
+    >
       {links.map((link) => (
-        <li key={link._id?.toString()} className="w-full">
+        <motion.li
+          key={link._id?.toString()}
+          className="w-full"
+          layoutId={link._id}
+          initial={{ opacity: 0, scale: 0.95 }}
+          animate={{ opacity: 1, scale: 1 }}
+          exit={{ opacity: 0, scale: 0.8, transition: { duration: 0.2 } }}
+          transition={{ type: "tween", duration: 0.2 }}
+        >
           <a href={link.url} target="_blank" rel="noopener noreferrer" className="w-full">
             <div className="flex bg-white w-full h-full gap-2 border border-gray-200 rounded-lg shadow-sm hover:shadow-md transition duration-200 ease-in-out">
               {link.imageLink && (
@@ -95,8 +116,8 @@ export default function LinkList({ groupId, date }: { groupId: string; date: str
               </button>
             </div>
           </a>
-        </li>
+        </motion.li>
       ))}
-    </ul>
+    </motion.ul>
   );
 }
