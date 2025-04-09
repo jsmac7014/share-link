@@ -8,7 +8,7 @@ export default function GroupLinkForm() {
   const [preview, setPreview] = useState({
     title: "",
     description: "",
-    imageLink: "https://placehold.co/400",
+    imageLink: "https://placehold.co/40?text=Preview",
   });
   const [isDisabled, setIsDisabled] = useState(true);
 
@@ -23,7 +23,7 @@ export default function GroupLinkForm() {
       toast.error("Failed to add link", { autoClose: 1000 });
     }
     setUrl("");
-    setPreview({ title: "", description: "", imageLink: "https://placehold.co/400" });
+    setPreview({ title: "", description: "", imageLink: "https://placehold.co/40?text=Preview" });
   }
 
   async function previewLink() {
