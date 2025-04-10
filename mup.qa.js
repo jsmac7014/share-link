@@ -8,7 +8,7 @@ module.exports = {
   },
 
   app: {
-    name: "linkly",
+    name: "qa-linkly",
     path: ".",
 
     servers: {
