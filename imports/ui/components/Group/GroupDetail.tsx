@@ -1,19 +1,16 @@
 import React, { useState } from "react";
-import { useNavigate, useParams, useSearchParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { Meteor } from "meteor/meteor";
 import { toast } from "react-toastify";
-import dayjs from "dayjs";
 import GroupEditModal from "/imports/ui/components/Group/GroupEditModal";
 
-import { useFind, useSubscribe } from "meteor/react-meteor-data";
+import { useFind } from "meteor/react-meteor-data";
 import { GroupDetail as GroupDetailCollection } from "/imports/api/client/groupDetail";
 
 export default function GroupDetail() {
   const { groupId } = useParams();
-  const [searchParams, setSearchParams] = useSearchParams();
   const navigate = useNavigate();
 
-  useSubscribe("group.detail", groupId);
   const group = useFind(() => GroupDetailCollection.find())[0];
 
   const userId = Meteor.userId();
@@ -31,7 +28,7 @@ export default function GroupDetail() {
         await navigator.clipboard.writeText(inviteURL);
         toast.success("Invite link copied!");
       } catch (err) {
-        toast.error("Copy failed");
+        toast.error("Copy failed" + err);
       }
     }
   };
@@ -46,25 +43,8 @@ export default function GroupDetail() {
     }
   }
 
-  function handleDateInputChange(event: React.ChangeEvent<HTMLInputElement>) {
-    const date = event.target.value;
-    if (dayjs(date, "YYYY-MM-DD", true).isValid()) {
-      setSearchParams({ date });
-    } else {
-      alert("Invalid date format");
-    }
-  }
-
   return (
     <div className="relative space-y-3 bg-white rounded-lg p-4 border shadow-sm">
-      <div className="md:hidden">
-        <input
-          value={searchParams.get("date")?.toString()}
-          type="date"
-          className="p-2 border rounded-lg"
-          onChange={handleDateInputChange}
-        />
-      </div>
       <div>
         <h1 className="text-3xl font-bold">{group?.name}</h1>
         <p className="text-gray-500">{group?.description}</p>

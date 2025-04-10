@@ -1,9 +1,10 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Meteor } from "meteor/meteor";
 import { useFind, useSubscribe } from "meteor/react-meteor-data";
 import { LinksWithUserInfo } from "/imports/api/client/linksWithUserInfo";
 import { toast } from "react-toastify";
 import { motion } from "motion/react";
+import { GroupFilterContext } from "/imports/ui/context/GroupFilterProvider";
 
 export default function LinkList({ groupId, date }: { groupId: string; date: string }) {
   // Get Timezone of the user
@@ -14,7 +15,14 @@ export default function LinkList({ groupId, date }: { groupId: string; date: str
     console.error("Error subscribing to links:", error);
   }
 
-  const links = useFind(() => LinksWithUserInfo.find({}, { sort: { createdAt: -1 } }));
+  const { checkedDomain } = useContext(GroupFilterContext);
+
+  const links = useFind(() => {
+    const regex = new RegExp(
+      checkedDomain.map((domain) => domain.replace(/[-/\\^$*+?.()|[\]{}]/g, "\\$&")).join("|"),
+    );
+    return LinksWithUserInfo.find({ url: { $regex: regex } }, { sort: { createdAt: -1 } });
+  }, [checkedDomain]);
 
   async function deleteLink(linkId: string | undefined) {
     try {
