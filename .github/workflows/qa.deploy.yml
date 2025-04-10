@@ -1,0 +1,50 @@
+name: "Deploy QA Meteor Using Meteor Up"
+on:
+  push:
+    branches:
+      - qa
+jobs:
+  deploy:
+    runs-on: ubuntu-22.04
+    steps:
+      - name: checkout repo
+        uses: actions/checkout@v3
+      - name: setup node
+        uses: actions/setup-node@v3
+        with:
+          node-version: '22'
+
+      #      INSTALL METEOR
+      - name: install meteor
+        run: curl https://install.meteor.com/ | sh
+
+      #     SETUP SSH
+      - name: setup ssh
+        run : |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/deploy_key
+          chmod 600 ~/.ssh/deploy_key
+          eval "$(ssh-agent -s)"
+          ssh-add ~/.ssh/deploy_key
+          ssh-keyscan -H ${{ secrets.SERVER_HOST }} >> ~/.ssh/known_hosts
+
+      #     INSTALL DEPENDENCIES
+      - name: install dependencies
+        run: meteor npm install
+
+      #    SETUP METEOR UP
+      - name: install mup globally
+        run: |
+          npm install -g mup
+      #     CREATE settings.json
+      - name: create settings.json for mup
+        run: |
+          echo '{}' > settings.json
+      #       DEPLOY
+      - name: deploy app
+        run: mup deploy --config mup.qa.js
+        env:
+          SERVER_HOST: ${{ secrets.SERVER_HOST }}
+          SERVER_USERNAME: ${{ secrets.SERVER_USER }}
+
+
