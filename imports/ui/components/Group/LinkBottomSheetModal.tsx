@@ -37,33 +37,36 @@ export default function LinkBottomSheetModal({
 
     try {
       await Meteor.callAsync("insert.linkComment", selectedLink?._id, groupId, comment);
-      toast.success("Comment added!");
+      toast.success("Comment added!", { autoClose: 500 });
       setComment("");
     } catch (error) {
-      toast.error(error?.toString());
+      toast.error(error?.toString(), { autoClose: 500 });
     }
   }
 
   return (
     <BottomSheetModal title={""} isOpen={isOpen} onClose={() => setIsOpen(false)}>
       {selectedLink && (
-        <div className="flex flex-col w-full h-full gap-2">
-          <img src={selectedLink.imageLink} alt="" />
-          <a
-            className="text-sm font-bold text-blue-500 hover:text-blue-700 transition duration-200 ease-in-out whitespace-nowrap overflow-hidden  text-ellipsis"
-            href={selectedLink.url}
-            target="_blank"
-            rel="noreferrer"
-          >
-            {selectedLink.url}
-          </a>
-          <div className="flex flex-col gap-2">
-            <h3 className="text-lg font-bold">{selectedLink.title}</h3>
+        <div className="flex flex-col w-full h-full gap-1">
+          <img className="rounded-lg" src={selectedLink.imageLink} alt="" />
+          <div className="flex flex-col gap-1">
+            <a
+              className="text-sm font-bold text-blue-500 hover:text-blue-700 transition duration-200 ease-in-out whitespace-nowrap overflow-hidden  text-ellipsis"
+              href={selectedLink.url}
+              target="_blank"
+              rel="noreferrer"
+            >
+              {selectedLink.url}
+            </a>
+            <div>
+              <h3 className="text-lg font-bold">{selectedLink.title}</h3>
+              <p className="text-gray-500 text-sm">@{selectedLink.userInfo?.username}</p>
+            </div>
             <p className="text-sm">{selectedLink.description}</p>
             <p className="text-gray-500 text-xs">
+              {new Date(selectedLink.createdAt).toLocaleDateString()}{" "}
               {new Date(selectedLink.createdAt).toLocaleTimeString()}
             </p>
-            <p className="text-gray-500 text-xs">Added by: @{selectedLink.userInfo?.username}</p>
           </div>
           {/* comments section */}
           <div className="flex flex-col gap-2">
@@ -73,13 +76,16 @@ export default function LinkBottomSheetModal({
               {comments.map((comment) => (
                 <li
                   key={comment._id?.toString()}
-                  className="flex flex-col gap-2 border-b border-gray-200 pb-2"
+                  className="flex flex-col gap-1 border-b border-gray-200 pb-2"
                 >
-                  <p className="text-sm">{comment.text}</p>
-                  <p className="text-gray-500 text-xs">
-                    {new Date(comment.createdAt).toLocaleTimeString()} by @
-                    {comment.userInfo?.username}
-                  </p>
+                  <p className="text-gray-500 text-xs">@{comment.userInfo?.username}</p>
+                  <div>
+                    <p className="text-sm">{comment.text}</p>
+                    <p className="text-gray-500 text-xs">
+                      {new Date(comment.createdAt).toLocaleDateString()}{" "}
+                      {new Date(comment.createdAt).toLocaleTimeString()}
+                    </p>
+                  </div>
                 </li>
               ))}
             </ul>

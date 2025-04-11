@@ -28,14 +28,14 @@ export default function LinkList({ groupId, date }: { groupId: string; date: str
     return LinksWithUserInfo.find({ url: { $regex: regex } }, { sort: { createdAt: -1 } });
   }, [checkedDomain]);
 
-  async function deleteLink(linkId: string | undefined) {
-    try {
-      await Meteor.callAsync("delete.link", linkId);
-      toast.success("Link deleted!");
-    } catch (error) {
-      toast.error(error?.toString());
-    }
-  }
+  // async function deleteLink(linkId: string | undefined) {
+  //   try {
+  //     await Meteor.callAsync("delete.link", linkId);
+  //     toast.success("Link deleted!");
+  //   } catch (error) {
+  //     toast.error(error?.toString());
+  //   }
+  // }
 
   if (!links || links.length === 0) {
     return (
@@ -91,56 +91,29 @@ export default function LinkList({ groupId, date }: { groupId: string; date: str
             }}
           >
             <div className="w-full cursor-pointer">
-              <div className="flex bg-white w-full h-full gap-2 border border-gray-200 rounded-lg shadow-sm hover:shadow-md transition duration-200 ease-in-out">
-                {link.imageLink && (
-                  <img
-                    src={link.imageLink}
-                    className="md:w-32 md:h-32 w-16 aspect-square rounded-tl-lg rounded-bl-lg object-cover"
-                    alt={link.title}
-                  />
-                )}
-                <div className="w-full flex flex-col overflow-hidden p-2">
-                  <div className="flex flex-row gap-2">
+              <div className="bg-white w-full h-full border border-gray-200 rounded-lg shadow-sm hover:shadow-md transition duration-200 ease-in-out">
+                <div className="w-full flex flex-col gap-2 overflow-hidden p-2">
+                  {link.imageLink && (
+                    <img
+                      src={link.imageLink}
+                      className="object-cover rounded-lg"
+                      alt={link.title}
+                    />
+                  )}
+                  <div className="flex flex-col">
                     <p className="text-gray-500 text-xs">@{link.userInfo?.username}</p>
-                  </div>
-                  <div className="h-full flex flex-col justify-between">
-                    <div className="flex flex-col">
-                      <a
-                        className="text-gray-500 text-xs hover:text-blue-500"
-                        href={link.url}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                      >
-                        {link.url.length > 40 ? link.url.slice(0, 40) + "..." : link.url}
-                      </a>
-                      <h3 className="md:text-md text-sm font-bold line-clamp-2">{link.title}</h3>
-                      <p className="truncate text-sm">{link.description}</p>
-                    </div>
                     <p className="text-gray-500 text-xs">
+                      {new Date(link.createdAt).toLocaleDateString()}{" "}
                       {new Date(link.createdAt).toLocaleTimeString()}
                     </p>
                   </div>
+                  <div className="h-full flex flex-col justify-between">
+                    <div className="flex flex-col">
+                      <h3 className="md:text-md text-sm font-bold line-clamp-2">{link.title}</h3>
+                      <p className="truncate text-sm">{link.description}</p>
+                    </div>
+                  </div>
                 </div>
-                <button
-                  className="p-2 place-self-start hover:bg-gray-100"
-                  onClick={(event) => {
-                    // prevent click event from anchor tag
-                    event.stopPropagation();
-                    event.preventDefault();
-                    deleteLink(link._id);
-                  }}
-                >
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    strokeWidth={1.5}
-                    stroke="currentColor"
-                    className="w-5 h-5 text-red-500"
-                  >
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
-                  </svg>
-                </button>
               </div>
               <div className="flex flex-col"></div>
             </div>
