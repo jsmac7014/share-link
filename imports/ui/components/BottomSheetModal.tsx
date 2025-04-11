@@ -17,12 +17,17 @@ export default function BottomSheetModal({
     <AnimatePresence>
       {isOpen && (
         <motion.div
-          key="overlay"
+          key="modal-backdrop"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           transition={{ duration: 0.3 }}
           className="fixed top-0 right-0 left-0 z-50 w-full h-dvh max-h-full bg-zinc-900 bg-opacity-30"
+          onClick={(event) => {
+            if (event.target === event.currentTarget) {
+              onClose();
+            }
+          }}
         >
           <motion.div
             key="modal"
@@ -30,7 +35,7 @@ export default function BottomSheetModal({
             animate={{ y: 0 }}
             exit={{ y: "100%" }}
             transition={{ duration: 0.3, type: "tween", ease: [0.65, 0.05, 0.36, 1] }}
-            className="fixed bottom-0 left-0 right-0 bg-white rounded-t-2xl shadow-lg p-4"
+            className="fixed bottom-0 left-0 right-0 bg-white rounded-t-2xl shadow-lg p-4 z-99"
           >
             {/* header */}
             <div className="flex flex-row justify-between items-center mb-2">

@@ -51,7 +51,7 @@ export default function GroupPage() {
           <GroupDetail />
           <div className="flex flex-row w-full gap-2">
             <button
-              className="lg:hidden inline-flex items-center p-2 border rounded-lg text-zinc-500 hover:bg-gray-100 bg-white"
+              className="md:hidden inline-flex items-center p-2 border rounded-lg text-zinc-500 hover:bg-gray-100 bg-white"
               onClick={() => setIsFilterBottomSheetOpen(true)}
             >
               <svg
