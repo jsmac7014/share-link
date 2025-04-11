@@ -36,3 +36,29 @@ export type GroupDetail = {
     username: string;
   };
 };
+export type LinkWithUserInfo = {
+  _id?: string;
+  url: string;
+  title: string;
+  description?: string;
+  imageLink?: string;
+  groupId: string;
+  owner: string;
+  createdAt: Date;
+  userInfo: {
+    _id: string;
+    name: string;
+    username: string;
+  };
+};
+export type LinkComment = {
+  _id?: string;
+  linkId: string;
+  userInfo: {
+    _id: string;
+    username: string;
+  };
+  text: string;
+  createdAt: Date;
+  updatedAt: Date;
+};
