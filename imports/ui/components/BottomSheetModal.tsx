@@ -14,7 +14,7 @@ export default function BottomSheetModal({
   onClose: () => void;
 }) {
   return createPortal(
-    <AnimatePresence mode="wait">
+    <AnimatePresence>
       {isOpen && (
         <motion.div
           key="overlay"
@@ -29,7 +29,7 @@ export default function BottomSheetModal({
             initial={{ y: "100%" }}
             animate={{ y: 0 }}
             exit={{ y: "100%" }}
-            transition={{ duration: 0.3, type: "spring" }}
+            transition={{ duration: 0.3, type: "tween", ease: [0.65, 0.05, 0.36, 1] }}
             className="fixed bottom-0 left-0 right-0 bg-white rounded-t-2xl shadow-lg p-4"
           >
             {/* header */}
