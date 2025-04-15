@@ -1,8 +1,6 @@
 import React, { useContext, useState } from "react";
-import { Meteor } from "meteor/meteor";
 import { useFind, useSubscribe } from "meteor/react-meteor-data";
 import { LinksWithUserInfo } from "/imports/api/client/linksWithUserInfo";
-import { toast } from "react-toastify";
 import { motion } from "motion/react";
 import { GroupFilterContext } from "/imports/ui/context/GroupFilterProvider";
 import { LinkWithUserInfo } from "/imports/types/types";
