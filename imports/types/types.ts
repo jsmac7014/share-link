@@ -4,6 +4,8 @@ export type Group = {
   description?: string;
   owner: string;
   members?: string[];
+  hidden?: boolean;
+  pin?: string[];
   createdAt: Date;
 };
 export type Link = {

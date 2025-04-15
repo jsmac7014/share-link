@@ -1,6 +1,6 @@
 import { Meteor } from "meteor/meteor";
 import { Groups } from "/imports/api/groups/groups";
-import { check } from "meteor/check";
+import { check, Match } from "meteor/check";
 import { Group } from "/imports/types/types";
 
 Meteor.methods({
@@ -64,13 +64,15 @@ Meteor.methods({
 
     return await group.aggregate(pipeline).toArray();
   },
-  "groups.insert": async function (group: Group) {
+  "insert.group": async function (group: Group) {
     check(group, {
       name: String,
       description: String,
       owner: String,
       members: [String],
       createdAt: Date,
+      hidden: Boolean,
+      pin: Match.Maybe([String]),
     });
 
     // Insert the new group into the database
