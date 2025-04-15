@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { AnimatePresence, motion } from "motion/react";
 import { createPortal } from "react-dom";
 
@@ -10,6 +10,16 @@ interface ModalProps {
 }
 
 const Modal: React.FC<ModalProps> = ({ children, onClose, isOpen, title }) => {
+  useEffect(() => {
+    const closeOnEscapePressed = (e: KeyboardEvent) => {
+      if (e.key === "Escape") {
+        onClose();
+      }
+    };
+    window.addEventListener("keydown", closeOnEscapePressed);
+    return () => window.removeEventListener("keydown", closeOnEscapePressed);
+  }, []);
+
   return createPortal(
     <AnimatePresence>
       {isOpen && (
@@ -26,26 +36,14 @@ const Modal: React.FC<ModalProps> = ({ children, onClose, isOpen, title }) => {
             animate={{ scale: 1, opacity: 1 }}
             exit={{ scale: 0, opacity: 0 }}
             transition={{ type: "spring", damping: 30, stiffness: 400 }}
-            className="relative bg-white rounded-lg w-full max-w-4xl p-2 m-4"
+            className="relative bg-white rounded-lg w-full max-w-2xl m-4"
           >
             {/* Modal header*/}
-            <div className="p-2 w-full inline-flex items-center justify-between">
+            <div className="p-4 w-full inline-flex items-center bg-white-100 border-b border-gray-200 shadow-xs">
               <h2 className="text-lg">{title}</h2>
-              <button className="p-2" onClick={onClose}>
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  strokeWidth={1.5}
-                  stroke="currentColor"
-                  className="size-5"
-                >
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M6 18 18 6M6 6l12 12" />
-                </svg>
-              </button>
             </div>
             {/*Modal Content*/}
-            <div key="modal-children" className="p-2">
+            <div key="modal-children" className="p-4 w-full h-full bg-gray-50 rounded-lg">
               {children}
             </div>
           </motion.div>
