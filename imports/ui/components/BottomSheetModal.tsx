@@ -14,6 +14,16 @@ export default function BottomSheetModal({
   onClose: () => void;
 }) {
   useEffect(() => {
+    const closeOnEscapePressed = (e: KeyboardEvent) => {
+      if (e.key === "Escape") {
+        onClose();
+      }
+    };
+    window.addEventListener("keydown", closeOnEscapePressed);
+    return () => window.removeEventListener("keydown", closeOnEscapePressed);
+  }, []);
+
+  useEffect(() => {
     if (isOpen) {
       document.body.style.overflow = "hidden";
     } else {

@@ -29,6 +29,11 @@ const Modal: React.FC<ModalProps> = ({ children, onClose, isOpen, title }) => {
           animate={{ opacity: 1, backdropFilter: "blur(2px)" }}
           exit={{ opacity: 0, backdropFilter: "blur(0px)" }}
           className="fixed top-0 right-0 left-0 z-50 w-full h-dvh max-h-full bg-zinc-900 bg-opacity-30 flex justify-center items-center"
+          onClick={(event) => {
+            if (event.target === event.currentTarget) {
+              onClose();
+            }
+          }}
         >
           <motion.div
             key={"modal-content"}
