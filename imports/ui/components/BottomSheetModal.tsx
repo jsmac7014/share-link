@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { AnimatePresence, motion } from "motion/react";
 import { createPortal } from "react-dom";
 
@@ -13,6 +13,27 @@ export default function BottomSheetModal({
   isOpen: boolean;
   onClose: () => void;
 }) {
+  useEffect(() => {
+    const closeOnEscapePressed = (e: KeyboardEvent) => {
+      if (e.key === "Escape") {
+        onClose();
+      }
+    };
+    window.addEventListener("keydown", closeOnEscapePressed);
+    return () => window.removeEventListener("keydown", closeOnEscapePressed);
+  }, []);
+
+  useEffect(() => {
+    if (isOpen) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
+    }
+
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [isOpen]);
   return createPortal(
     <AnimatePresence>
       {isOpen && (
