@@ -2,7 +2,7 @@ export type Group = {
   _id?: string;
   name: string;
   description?: string;
-  owner: string;
+  owner?: string;
   members?: string[];
   hidden?: boolean;
   pin?: string[];

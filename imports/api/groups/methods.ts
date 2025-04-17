@@ -1,5 +1,5 @@
 import { Meteor } from "meteor/meteor";
-import { Groups } from "/imports/api/groups/groups";
+import { Groups, groupValidatorContext } from "/imports/api/groups/groups";
 import { check, Match } from "meteor/check";
 import { Group } from "/imports/types/types";
 
@@ -74,6 +74,18 @@ Meteor.methods({
       hidden: Boolean,
       pin: Match.Maybe([String]),
     });
+
+    const isValid = groupValidatorContext.validate(group);
+    console.log(isValid);
+
+    if (!isValid) {
+      const errors = groupValidatorContext.validationErrors().map((error) => ({
+        name: error.name,
+        message: groupValidatorContext.keyErrorMessage(error.name),
+      }));
+
+      throw new Meteor.Error("validation-error", "Validation Failed", JSON.stringify(errors));
+    }
 
     // Insert the new group into the database
     return Groups.insertAsync(group);
