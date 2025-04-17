@@ -18,8 +18,6 @@ Meteor.publish("groups", function (tab: string) {
       return Groups.find({ members: { $in: [this.userId] } });
     case "hidden":
       return Groups.find({ owner: this.userId, hidden: true });
-    default:
-      return Groups.find({ $or: [{ members: this.userId }, { owner: this.userId }] });
   }
 });
 Meteor.publish("group.detail", function (groupId: string) {

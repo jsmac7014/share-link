@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { Link, useSearchParams } from "react-router-dom";
 import { useFind, useSubscribe } from "meteor/react-meteor-data";
 import { Groups } from "/imports/api/groups/groups";
 import dayjs from "dayjs";
@@ -7,13 +7,20 @@ import { Helmet } from "react-helmet-async";
 import GroupCreateModal from "/imports/ui/components/Group/GroupCreateModal";
 
 export default function Dashboard() {
-  const [currentTab, setCurrentTab] = useState("all");
+  const [searchParams, setSearchParams] = useSearchParams();
+
   const [isCreateGroupModalOpen, setIsCreateGroupModalOpen] = useState(false);
 
-  useSubscribe("groups", currentTab);
+  useSubscribe("groups", searchParams.get("t"));
   const groups = useFind(() => Groups.find());
 
   const date = dayjs().format("YYYY-MM-DD");
+
+  useEffect(() => {
+    if (!searchParams.has("t")) {
+      setSearchParams({ t: "owned" });
+    }
+  }, []);
 
   return (
     <div className="w-full space-y-2">
@@ -22,46 +29,36 @@ export default function Dashboard() {
       </Helmet>
       {/*tabs*/}
       <div className="w-full flex flex-row gap-2">
-        <button
+        <Link
+          to={"/dashboard?t=owned"}
           className={
-            currentTab === "all"
+            searchParams.get("t") === "owned"
               ? "p-2 min-w-14 rounded-full bg-blue-500 text-white text-sm"
               : "p-2 min-w-14 rounded-full  text-zinc-800 text-sm"
           }
-          onClick={() => setCurrentTab("all")}
-        >
-          All
-        </button>
-        <button
-          className={
-            currentTab === "owned"
-              ? "p-2 min-w-14 rounded-full bg-blue-500 text-white text-sm"
-              : "p-2 min-w-14 rounded-full  text-zinc-800 text-sm"
-          }
-          onClick={() => setCurrentTab("owned")}
         >
           Owned
-        </button>
-        <button
+        </Link>
+        <Link
+          to={"/dashboard?t=invited"}
           className={
-            currentTab === "invited"
+            searchParams.get("t") === "invited"
               ? "p-2 min-w-14 rounded-full bg-blue-500 text-white text-sm"
               : "p-2 min-w-14 rounded-full  text-zinc-800 text-sm"
           }
-          onClick={() => setCurrentTab("invited")}
         >
           Invited
-        </button>
-        <button
+        </Link>
+        <Link
+          to={"/dashboard?t=hidden"}
           className={
-            currentTab === "hidden"
+            searchParams.get("t") === "hidden"
               ? "p-2 min-w-14 rounded-full bg-blue-500 text-white text-sm"
               : "p-2 min-w-14 rounded-full  text-zinc-500 text-sm"
           }
-          onClick={() => setCurrentTab("hidden")}
         >
           Hidden
-        </button>
+        </Link>
       </div>
       <ul className="grid md:grid-cols-3 sm:grid-cols-2 grid-cols-1 gap-2">
         {/* create group */}
