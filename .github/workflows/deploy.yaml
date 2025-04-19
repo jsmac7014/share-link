@@ -36,6 +36,12 @@ jobs:
       - name: install mup globally
         run: |
           npm install -g mup
+
+      - name: create firebase service account json
+        run: |
+          touch server/linkly-firebase-admin-service-account-key.json
+          cat "${{ secrets.FIREBASE_SERVICE_ACCOUNT }}" > server/linkly-firebase-admin-service-account-key.json
+
 #     CREATE settings.json
       - name: create settings.json for mup
         run: |
