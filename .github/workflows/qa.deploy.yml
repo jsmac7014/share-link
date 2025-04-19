@@ -40,7 +40,7 @@ jobs:
       - name: create firebase service account json
         run: |
           touch server/linkly-firebase-admin-service-account-key.json
-          echo "${{ secrets.FIREBASE_SERVICE_ACCOUNT }}" > server/linkly-firebase-admin-service-account-key.json
+          echo "${{ secrets.FIREBASE_SERVICE_ACCOUNT }}" | base64 -d > server/linkly-firebase-admin-service-account-key.json
 
       #     CREATE settings.json
       - name: create settings.json for mup
