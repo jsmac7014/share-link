@@ -3,6 +3,7 @@ import { Links } from "/imports/api/links/links";
 import { check } from "meteor/check";
 import cheerio from "cheerio";
 import type { Link } from "/imports/types/types";
+import admin from "firebase-admin";
 
 async function fetchMeta(link: string) {
   // fetch meta data from the link
@@ -57,6 +58,7 @@ Meteor.methods({
     }
     // Check if user has access to this group
     const group = await Meteor.callAsync("groups.get", groupId);
+    console.log(group);
     if (group[0].ownerInfo._id !== this.userId && !group[0].members.includes(this.userId)) {
       throw new Meteor.Error(
         "not-authorized",
@@ -74,10 +76,42 @@ Meteor.methods({
       owner: this.userId,
       createdAt: new Date(),
     };
+    await Links.insertAsync(newLink);
 
-    console.log(newLink);
+    // get users fcmToken in the group
+    const users = await Meteor.users
+      .find(
+        {
+          _id: {
+            $in: group[0].members,
+          },
+        },
+        { fields: { "profile.fcmToken": 1 } },
+      )
+      .fetch();
+    console.log(users);
+    const tokens = users
+      .map((user) => user.profile?.fcmToken || []) // fcmToken이 배열이라고 가정
+      .flat(); // 2차원 배열을 평탄화
 
-    return await Links.insertAsync(newLink);
+    console.log(tokens);
+    if (tokens.length !== 0) {
+      try {
+        const messagePayload = {
+          notification: {
+            title: preview.title,
+            body: preview.description,
+          },
+          tokens: tokens,
+        };
+        const response = await admin.messaging().sendEachForMulticast(messagePayload);
+
+        console.log("푸시 알림 전송 성공:", response);
+        return response;
+      } catch (error) {
+        console.error("푸시 알림 전송 실패:", error);
+      }
+    }
   },
 
   "delete.link": async function (linkId: string) {

@@ -14,31 +14,12 @@ Meteor.startup(async () => {
   }
 
   Meteor.methods({
-    sendPushNotification(userId: string, title: string, body: string) {
-      const user = Meteor.users.findOne(userId);
-      const token = user?.profile?.fcmToken;
-      if (!token) throw new Meteor.Error("No FCM token");
-
-      admin
-        .messaging()
-        .send({
-          token,
-          notification: { title, body },
-        })
-        .then((response) => {
-          console.log("Successfully sent message:", response);
-        })
-        .catch((error) => {
-          console.error("Error sending message:", error);
-        });
-    },
     "save.fcm.token": async function (token: string) {
       const userId = Meteor.userId();
       const user = await Meteor.users.updateAsync(
         { _id: userId! },
-        { $set: { "profile.fcmToken": token } },
+        { $addToSet: { "profile.fcmToken": token } },
       );
-
       return user;
     },
   });

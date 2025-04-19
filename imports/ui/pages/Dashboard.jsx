@@ -6,7 +6,7 @@ import { Groups } from "/imports/api/groups/groups";
 import dayjs from "dayjs";
 import { Helmet } from "react-helmet-async";
 import GroupCreateModal from "/imports/ui/components/Group/GroupCreateModal";
-import { listenForMessages, requestForToken } from "/imports/firebase-config";
+import { requestForToken } from "/imports/firebase-config";
 
 export default function Dashboard() {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -24,8 +24,6 @@ export default function Dashboard() {
     }
   }, []);
 
-  const [message, setMessage] = useState("");
-
   // FCM 토큰 요청
   useEffect(() => {
     requestForToken()
@@ -40,14 +38,6 @@ export default function Dashboard() {
       .catch((err) => {
         console.log("FCM 토큰 발급 오류: ", err);
       });
-  }, []);
-
-  // 푸시 알림 수신 (포그라운드에서 수신)
-  useEffect(() => {
-    listenForMessages((payload) => {
-      console.log("푸시 알림 받음: ", payload);
-      setMessage(payload.notification.body); // 받은 메시지 저장
-    });
   }, []);
 
   return (
