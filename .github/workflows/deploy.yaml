@@ -41,6 +41,7 @@ jobs:
         uses: jsdaniell/create-json@1.1.2
         with:
           name: "linkly-firebase-admin-service-account-key.json"
+          dir: ./server/
           json: ${{ secrets.FIREBASE_SERVICE_ACCOUNT }}
 
 #     CREATE settings.json
