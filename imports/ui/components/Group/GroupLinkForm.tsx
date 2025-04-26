@@ -50,10 +50,11 @@ export default function GroupLinkForm() {
         imageLink: result.imageLink,
       });
       toast.success("Link previewed successfully", { autoClose: 1000 });
-      await setIsLoading(false);
+      setIsLoading(false);
     } catch (error) {
       console.error("Error previewing link:", error);
       toast.error("Failed to preview link");
+      setIsLoading(false);
     }
   }
 

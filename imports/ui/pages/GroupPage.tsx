@@ -47,7 +47,7 @@ export default function GroupPage() {
         <div className="md:flex md:flex-col md:gap-2 md:w-full md:col-span-4 hidden">
           <GroupFilter />
         </div>
-        <div className="col-span-8 flex flex-col w-full h-full space-y-2 lg:mt-9">
+        <div className="col-span-8 flex flex-col w-full space-y-2 lg:mt-9">
           <GroupDetail />
           <div className="flex flex-row w-full gap-2">
             <button
