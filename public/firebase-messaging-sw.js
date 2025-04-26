@@ -20,6 +20,4 @@ const messaging = firebase.messaging();
 
 messaging.onBackgroundMessage(function (payload) {
   console.log("[sw.js] 백그라운드 메시지 ", payload);
-  const { title, body } = payload.notification;
-  self.registration.showNotification(title, { body });
 });
