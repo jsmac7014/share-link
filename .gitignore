@@ -3,3 +3,5 @@ node_modules/
 .meteor/
 .vscode/
 logs/
+server/linkly-firebase-admin-service-account-key.json
+.idea

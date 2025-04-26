@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from "react";
+import { Meteor } from "meteor/meteor";
 import { Link, useSearchParams } from "react-router-dom";
 import { useFind, useSubscribe } from "meteor/react-meteor-data";
 import { Groups } from "/imports/api/groups/groups";
 import dayjs from "dayjs";
 import { Helmet } from "react-helmet-async";
 import GroupCreateModal from "/imports/ui/components/Group/GroupCreateModal";
+import { requestForToken } from "/imports/firebase-config";
 
 export default function Dashboard() {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -20,6 +22,22 @@ export default function Dashboard() {
     if (!searchParams.has("t")) {
       setSearchParams({ t: "owned" });
     }
+  }, []);
+
+  // FCM 토큰 요청
+  useEffect(() => {
+    requestForToken()
+      .then((currentToken) => {
+        if (currentToken) {
+          console.log("FCM 토큰: ", currentToken);
+          Meteor.call("save.fcm.token", currentToken); // 서버에 저장
+        } else {
+          console.log("FCM 토큰을 받을 수 없습니다.");
+        }
+      })
+      .catch((err) => {
+        console.log("FCM 토큰 발급 오류: ", err);
+      });
   }, []);
 
   return (

@@ -13,7 +13,7 @@ Meteor.publish("groups", function (tab: string) {
 
   switch (tab) {
     case "owned":
-      return Groups.find({ owner: this.userId });
+      return Groups.find({ owner: this.userId, hidden: false });
     case "invited":
       return Groups.find({ members: { $in: [this.userId] } });
     case "hidden":
