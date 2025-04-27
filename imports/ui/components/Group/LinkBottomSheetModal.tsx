@@ -47,7 +47,7 @@ export default function LinkBottomSheetModal({
   return (
     <BottomSheetModal title={""} isOpen={isOpen} onClose={() => setIsOpen(false)}>
       {selectedLink && (
-        <div className="flex flex-col w-full h-full gap-1">
+        <div className="flex flex-col w-full h-full gap-1 max-w-2xl mx-auto">
           <img className="rounded-lg" src={selectedLink.imageLink} alt="" />
           <div className="flex flex-col gap-1">
             <a
