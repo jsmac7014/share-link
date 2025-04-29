@@ -36,9 +36,8 @@ export default function GroupDetail() {
   async function handleLeaveGroup() {
     try {
       await Meteor.callAsync("groups.leave", groupId, Meteor.userId());
-      navigate("/dashboard");
+      return navigate("/dashboard");
     } catch (error) {
-      console.error("Error leaving group:", error);
       toast.error("Failed to leave group");
     }
   }

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Meteor } from "meteor/meteor";
-import { Link, useSearchParams } from "react-router-dom";
+import { Link, useSearchParams, useNavigate } from "react-router-dom";
 import { useFind, useSubscribe } from "meteor/react-meteor-data";
 import { Groups } from "/imports/api/groups/groups";
 import dayjs from "dayjs";
@@ -9,7 +9,8 @@ import GroupCreateModal from "/imports/ui/components/Group/GroupCreateModal";
 import { requestForToken } from "/imports/firebase-config";
 
 export default function Dashboard() {
-  const [searchParams, setSearchParams] = useSearchParams();
+  const [searchParams] = useSearchParams();
+  const navigate = useNavigate();
 
   const [isCreateGroupModalOpen, setIsCreateGroupModalOpen] = useState(false);
 
@@ -18,13 +19,6 @@ export default function Dashboard() {
 
   const date = dayjs().format("YYYY-MM-DD");
 
-  useEffect(() => {
-    if (!searchParams.has("t")) {
-      setSearchParams({ t: "owned" });
-    }
-  }, []);
-
-  // FCM 토큰 요청
   useEffect(() => {
     requestForToken()
       .then((currentToken) => {
@@ -39,6 +33,13 @@ export default function Dashboard() {
         console.log("FCM 토큰 발급 오류: ", err);
       });
   }, []);
+
+  useEffect(() => {
+    const t = searchParams.get("t");
+    if (!t) {
+      navigate("/dashboard?t=owned", { replace: true });
+    }
+  }, [searchParams, navigate]);
 
   return (
     <div className="w-full space-y-2">

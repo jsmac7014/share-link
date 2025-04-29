@@ -4,7 +4,6 @@ import router from "/imports/startup/client/routes";
 import { HelmetProvider } from "react-helmet-async";
 
 export const App = () => {
-  // ask notification permission
   async function handleAllowNotification() {
     const permission = await Notification.requestPermission();
 
@@ -20,6 +19,7 @@ export const App = () => {
   useEffect(() => {
     handleAllowNotification();
   }, []);
+
   return (
     <HelmetProvider>
       <RouterProvider router={router} />

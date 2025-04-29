@@ -11,10 +11,18 @@ export default function SignInPage() {
   const handleSubmit = (event) => {
     event.preventDefault();
 
-    Meteor.loginWithPassword(username, password, (error) => {
+    Meteor.loginWithPassword(username, password, async (error) => {
       if (error) {
         setError(error.reason);
       } else {
+        const permission = await Notification.requestPermission();
+        if (permission === "default" && window.confirm("Do you want to allow notification")) {
+          if (permission === "granted") {
+            console.log("Permission granted");
+          } else if (permission === "denied") {
+            console.log("Permission denied");
+          }
+        }
         setError("");
         navigate("/dashboard");
       }
